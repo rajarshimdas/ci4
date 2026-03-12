@@ -1,0 +1,41 @@
+/*
++-------------------------------------------------------+
+| Rajarshi Das                                          |
++-------------------------------------------------------+
+| Created: 12-Mar-2026                                  |
+| Updated:                                              |
++-------------------------------------------------------+
+*/
+@import url("extras/normailize.css");
+
+@font-face {
+    font-family: "ci4fontR";
+    src: url("fonts/IBMPlexSans-Regular.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "ci4fontB";
+    src: url("fonts/IBMPlexSans-Bold.woff2") format("woff2");
+}
+
+body {
+    font-family: -apple-system, "Segoe UI", "ci4fontR", Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+/* css reset */
+*,
+*::before,
+*::after {
+    box-sizing: border-box
+}
+
+/* do not need to define everytime */
+table,
+img,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}

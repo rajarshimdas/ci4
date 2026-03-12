@@ -1,0 +1,5 @@
+Notes
+
+Based On: codeigniter4-framework-v4.7.0-0-ge7753bc.zip
+User Guide: http://ci4/
+
