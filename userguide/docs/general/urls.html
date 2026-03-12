@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeIgniter URLs &mdash; CodeIgniter 4.7.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Helper Functions" href="helpers.html" />
+    <link rel="prev" title="Configuration" href="configuration.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/ci-logo-text.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/requirements.html">Server Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/credits.html">Credits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/psr.html">PSR Compliance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">License Agreement</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/worker_mode.html">Worker Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/first-app/index.html">Build Your First Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/api/index.html">Getting Started with REST APIs</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/structure.html">Application Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/mvc.html">Models, Views, and Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/autoloader.html">Autoloading Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/factories.html">Factories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/http.html">Working with HTTP Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/security.html">Security Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/goals.html">Design and Architectural Goals</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">General Topics</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">CodeIgniter URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helpers.html">Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="common_functions.html">Global Functions and Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">Logging Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="errors.html">Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="caching.html">Web Page Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ajax.html">AJAX Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html">Code Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="managing_apps.html">Managing your Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environments.html">Handling Multiple Environments</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controller_attributes.html">Controller Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/incomingrequest.html">IncomingRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/content_negotiation.html">Content Negotiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/methodspoofing.html">HTTP Method Spoofing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/restful.html">RESTful Resource Handling</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/views.html">Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_renderer.html">View Renderer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_layouts.html">View Layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_cells.html">View Cells</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_parser.html">View Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_decorators.html">View Decorators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/table.html">HTML Table Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/response.html">HTTP Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_transformers.html">API Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/csp.html">Content Security Policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/localization.html">Localization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/alternative_php.html">Alternate PHP Syntax for View Files</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working with Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../database/examples.html">Quick Start: Usage Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/configuration.html">Database Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/connecting.html">Connecting to a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/queries.html">Running Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/results.html">Generating Query Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/helpers.html">Query Helper Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/query_builder.html">Query Builder Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/transactions.html">Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/metadata.html">Getting Metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/call_function.html">Custom Function Calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/events.html">Database Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/utilities.html">Database Utilities</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../models/index.html">Modeling Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../models/model.html">Using CodeIgniter's Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../models/entities.html">Using Entity Classes</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/forge.html">Database Forge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/migration.html">Database Migrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/seeds.html">Database Seeding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/db_commands.html">Database Commands</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cookies.html">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cors.html">Cross-Origin Resource Sharing (CORS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/files.html">Working with Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/file_collections.html">File Collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/honeypot.html">Honeypot Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/images.html">Image Manipulation Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/publisher.html">Publisher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/security.html">Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/sessions.html">Session Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/throttler.html">Throttler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/time.html">Times and Dates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/typography.html">Typography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/uploaded_files.html">Working with Uploaded Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/uri.html">Working with URIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/user_agent.html">User Agent Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/validation.html">Validation</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/array_helper.html">Array Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/cookie_helper.html">Cookie Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/date_helper.html">Date Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/filesystem_helper.html">Filesystem Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/form_helper.html">Form Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/html_helper.html">HTML Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/inflector_helper.html">Inflector Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/number_helper.html">Number Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/security_helper.html">Security Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/test_helper.html">Test Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/text_helper.html">Text Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/url_helper.html">URL Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/xml_helper.html">XML Helper</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../testing/overview.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/fabricator.html">Generating Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/controllers.html">Controller Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/feature.html">HTTP Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/response.html">Testing Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/cli.html">Testing CLI Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/mocking.html">Mocking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/benchmark.html">Benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/debugging.html">Debugging Your Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/session_testing.html">Session Testing</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_overview.html">CLI Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_controllers.html">Running Controllers via CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/spark_commands.html">Spark Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_commands.html">Creating Spark Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_generators.html">CLI Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_signals.html">CLI Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_request.html">CLIRequest Class</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../extending/core_classes.html">Creating Core System Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/common.html">Replacing Common Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/events.html">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/basecontroller.html">Extending the Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/authentication.html">Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/composer_packages.html">Creating Composer Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/contributing.html">Contributing to CodeIgniter</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/official_packages.html">Official Packages</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">General Topics</a></li>
+      <li class="breadcrumb-item active">CodeIgniter URLs</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="codeigniter-urls">
+<h1>CodeIgniter URLs<a class="headerlink" href="#codeigniter-urls" title="Permalink to this heading"></a></h1>
+<nav class="contents local" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#url-structure" id="id1">URL Structure</a></p>
+<ul>
+<li><p><a class="reference internal" href="#base-url-contains-only-the-hostname" id="id2">Base URL contains only the Hostname</a></p></li>
+<li><p><a class="reference internal" href="#base-url-contains-sub-folders" id="id3">Base URL contains Sub folders</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#uri-security" id="id4">URI Security</a></p>
+<ul>
+<li><p><a class="reference internal" href="#adding-permitted-characters" id="id5">Adding Permitted Characters</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#removing-the-index-php-file" id="id6">Removing the index.php file</a></p>
+<ul>
+<li><p><a class="reference internal" href="#apache-web-server" id="id7">Apache Web Server</a></p></li>
+<li><p><a class="reference internal" href="#nginx" id="id8">nginx</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<p>By default, URLs in CodeIgniter are designed to be search-engine and human-friendly. Rather than using the standard
+“query-string” approach to URLs that is synonymous with dynamic systems, CodeIgniter uses a <strong>segment-based</strong> approach:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">https</span><span class="o">://</span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">news</span><span class="o">/</span><span class="nx">article</span><span class="o">/</span><span class="nx">my_article</span>
+</pre></div>
+</div>
+<p>Your URLs can be defined using the <a class="reference internal" href="../incoming/routing.html"><span class="doc">URI Routing</span></a> feature with flexibility.</p>
+<p>The <a class="reference internal" href="../libraries/uri.html"><span class="doc">URI Library</span></a> and the <a class="reference internal" href="../helpers/url_helper.html"><span class="doc">URL Helper</span></a> contain functions that make it easy to work with your URI data.</p>
+<section id="url-structure">
+<span id="urls-url-structure"></span><h2><a class="toc-backref" href="#id1" role="doc-backlink">URL Structure</a><a class="headerlink" href="#url-structure" title="Permalink to this heading"></a></h2>
+<section id="base-url-contains-only-the-hostname">
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">Base URL contains only the Hostname</a><a class="headerlink" href="#base-url-contains-only-the-hostname" title="Permalink to this heading"></a></h3>
+<p>When you have the Base URL <strong>https://www.example.com/</strong> and imagine the following URL:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">https</span><span class="o">://</span><span class="nx">www</span><span class="o">.</span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">blog</span><span class="o">/</span><span class="nx">news</span><span class="o">/</span><span class="mi">2022</span><span class="o">/</span><span class="mi">10</span><span class="o">?</span><span class="nx">page</span><span class="o">=</span><span class="mi">2</span>
+</pre></div>
+</div>
+<p>We use the following terms:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Term</p></th>
+<th class="head"><p>Example</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Base URL</p></td>
+<td><p><strong>https://www.example.com/</strong></p></td>
+<td><p>Base URL is often denoted as <strong>baseURL</strong>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>URI path</p></td>
+<td><p>/blog/news/2022/10</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Route path</p></td>
+<td><p>/blog/news/2022/10</p></td>
+<td><p>The URI path relative to the Base URL.
+It is also called as <strong>URI string</strong>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Query</p></td>
+<td><p>page=2</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="base-url-contains-sub-folders">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Base URL contains Sub folders</a><a class="headerlink" href="#base-url-contains-sub-folders" title="Permalink to this heading"></a></h3>
+<p>When you have the Base URL <strong>https://www.example.com/ci-blog/</strong> and imagine the following URL:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">https</span><span class="o">://</span><span class="nx">www</span><span class="o">.</span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">ci</span><span class="o">-</span><span class="nx">blog</span><span class="o">/</span><span class="nx">blog</span><span class="o">/</span><span class="nx">news</span><span class="o">/</span><span class="mi">2022</span><span class="o">/</span><span class="mi">10</span><span class="o">?</span><span class="nx">page</span><span class="o">=</span><span class="mi">2</span>
+</pre></div>
+</div>
+<p>We use the following terms:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Term</p></th>
+<th class="head"><p>Example</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Base URL</p></td>
+<td><p><strong>https://www.example.com/ci-blog/</strong></p></td>
+<td><p>Base URL is often denoted as <strong>baseURL</strong>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>URI path</p></td>
+<td><p>/ci-blog/blog/news/2022/10</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Route path</p></td>
+<td><p>/blog/news/2022/10</p></td>
+<td><p>The URI path relative to the Base URL.
+It is also called as <strong>URI string</strong>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Query</p></td>
+<td><p>page=2</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="uri-security">
+<span id="urls-uri-security"></span><h2><a class="toc-backref" href="#id4" role="doc-backlink">URI Security</a><a class="headerlink" href="#uri-security" title="Permalink to this heading"></a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.4.7.</span></p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Users upgrading from versions prior to v4.4.7 will need to add the following
+to <strong>app/Config/App.php</strong> in order to use this feature:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">string</span> <span class="nv">$permittedURIChars</span> <span class="o">=</span> <span class="s1">&#39;a-z 0-9~%.:_\-&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<p>CodeIgniter is fairly restrictive regarding which characters it allows in your
+URI strings (Route path) in order to help minimize the possibility that malicious
+data can be passed to your application. URIs may only contain the following:</p>
+<ul class="simple">
+<li><p>Alpha-numeric text (latin characters only)</p></li>
+<li><p>Tilde: <code class="docutils literal notranslate"><span class="pre">~</span></code></p></li>
+<li><p>Percent sign: <code class="docutils literal notranslate"><span class="pre">%</span></code></p></li>
+<li><p>Period: <code class="docutils literal notranslate"><span class="pre">.</span></code></p></li>
+<li><p>Colon: <code class="docutils literal notranslate"><span class="pre">:</span></code></p></li>
+<li><p>Underscore: <code class="docutils literal notranslate"><span class="pre">_</span></code></p></li>
+<li><p>Dash: <code class="docutils literal notranslate"><span class="pre">-</span></code></p></li>
+<li><p>Space: `` ``</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This check is performed by the <code class="docutils literal notranslate"><span class="pre">Router</span></code>. The Router takes the URL-encoded
+value held by the <code class="docutils literal notranslate"><span class="pre">SiteURI</span></code> class, decodes it, and then checks that it
+does not contain not permitted strings.</p>
+</div>
+<section id="adding-permitted-characters">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Adding Permitted Characters</a><a class="headerlink" href="#adding-permitted-characters" title="Permalink to this heading"></a></h3>
+<p>The permitted characters can be changed by <code class="docutils literal notranslate"><span class="pre">Config\App::$permittedURIChars</span></code>.</p>
+<p>If you want to use Unicode for URI paths, modify it to allow the characters to
+be used. For example, if you want to use Bengali, you will need to set the
+following value in <strong>app/Config/App.php</strong>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="nx">string</span> <span class="nv">$permittedURIChars</span> <span class="o">=</span> <span class="s1">&#39;a-z 0-9~%.:_\-\x{0980}-\x{09ff}&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>A full list of Unicode ranges can be found at Wikipedia’s <a class="reference external" href="https://en.wikipedia.org/wiki/Unicode_block">Unicode block</a>.</p>
+</section>
+</section>
+<section id="removing-the-index-php-file">
+<span id="urls-remove-index-php"></span><h2><a class="toc-backref" href="#id6" role="doc-backlink">Removing the index.php file</a><a class="headerlink" href="#removing-the-index-php-file" title="Permalink to this heading"></a></h2>
+<p>When you use Apache Web Server, by default, the <strong>index.php</strong> file will be needed in your URLs:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nx">example</span><span class="o">.</span><span class="nx">com</span><span class="o">/</span><span class="nx">index</span><span class="o">.</span><span class="nx">php</span><span class="o">/</span><span class="nx">news</span><span class="o">/</span><span class="nx">article</span><span class="o">/</span><span class="nx">my_article</span>
+</pre></div>
+</div>
+<p>If your server supports rewriting URLs you can easily remove this file with URL rewriting. This is handled differently
+by different servers, but we will show examples for the two most common web servers here.</p>
+<section id="apache-web-server">
+<span id="urls-remove-index-php-apache"></span><h3><a class="toc-backref" href="#id7" role="doc-backlink">Apache Web Server</a><a class="headerlink" href="#apache-web-server" title="Permalink to this heading"></a></h3>
+<p>Apache must have the <em>mod_rewrite</em> extension enabled. If it does, you can use a <code class="docutils literal notranslate"><span class="pre">.htaccess</span></code> file with some simple rules.
+Here is an example of such a file, using the “negative” method in which everything is redirected except the specified
+items:</p>
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">RewriteEngine</span><span class="w"> </span><span class="k">On</span>
+<span class="nb">RewriteCond</span><span class="w"> </span>%{REQUEST_FILENAME}<span class="w"> </span>!-f
+<span class="nb">RewriteCond</span><span class="w"> </span>%{REQUEST_FILENAME}<span class="w"> </span>!-d
+<span class="nb">RewriteRule</span><span class="w"> </span>^(.*)$<span class="w"> </span>index.php/$1<span class="w"> </span>[L]
+</pre></div>
+</div>
+<p>In this example, any HTTP request other than those for existing directories and existing files are treated as a
+request for your index.php file.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These specific rules might not work for all server configurations.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Make sure to also exclude from the above rules any assets that you might need to be accessible from the outside world.</p>
+</div>
+</section>
+<section id="nginx">
+<span id="urls-remove-index-php-nginx"></span><h3><a class="toc-backref" href="#id8" role="doc-backlink">nginx</a><a class="headerlink" href="#nginx" title="Permalink to this heading"></a></h3>
+<p>Under nginx, you can define a location block and use the <code class="docutils literal notranslate"><span class="pre">try_files</span></code> directive to get the same effect as we did with
+the above Apache configuration:</p>
+<div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">try_files</span><span class="w"> </span><span class="nv">$uri</span><span class="w"> </span><span class="nv">$uri/</span><span class="w"> </span><span class="s">/index.php</span><span class="nv">$is_args$args</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This will first look for a file or directory matching the URI (constructing the full path to each file from the
+settings of the root and alias directives), and then sends the request to the index.php file along with any arguments.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="configuration.html" class="btn btn-neutral float-left" title="Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="helpers.html" class="btn btn-neutral float-right" title="Helper Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Feb 01, 2026.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>

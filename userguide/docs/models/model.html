@@ -1,0 +1,2218 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Using CodeIgniter’s Model &mdash; CodeIgniter 4.7.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/citheme_dark.css" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/js/citheme.js"></script>
+        <script src="../_static/js/carbon.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using Entity Classes" href="entities.html" />
+    <link rel="prev" title="Modeling Data" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/ci-logo-text.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../intro/index.html">Welcome to CodeIgniter4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/requirements.html">Server Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/credits.html">Credits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/psr.html">PSR Compliance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../license.html">License Agreement</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_composer.html">Composer Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/installing_manual.html">Manual Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/running.html">Running Your App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/worker_mode.html">Worker Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/deployment.html">Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelogs/index.html">Change Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/upgrading.html">Upgrading From a Previous Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation/repositories.html">CodeIgniter Repositories</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../guides/index.html">Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guides/first-app/index.html">Build Your First Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/api/index.html">Getting Started with REST APIs</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">CodeIgniter4 Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/structure.html">Application Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/mvc.html">Models, Views, and Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/autoloader.html">Autoloading Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/services.html">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/factories.html">Factories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/http.html">Working with HTTP Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/security.html">Security Guidelines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/goals.html">Design and Architectural Goals</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../general/configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/urls.html">CodeIgniter URLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/helpers.html">Helper Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/common_functions.html">Global Functions and Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/logging.html">Logging Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/errors.html">Error Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/caching.html">Web Page Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/ajax.html">AJAX Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/modules.html">Code Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/managing_apps.html">Managing your Applications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../general/environments.html">Handling Multiple Environments</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../incoming/index.html">Controllers and Routing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/routing.html">URI Routing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controllers.html">Controllers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/filters.html">Controller Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/controller_attributes.html">Controller Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/auto_routing_improved.html">Auto Routing (Improved)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/message.html">HTTP Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/request.html">Request Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/incomingrequest.html">IncomingRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/content_negotiation.html">Content Negotiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/methodspoofing.html">HTTP Method Spoofing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../incoming/restful.html">RESTful Resource Handling</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../outgoing/index.html">Building Responses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/views.html">Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_renderer.html">View Renderer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_layouts.html">View Layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_cells.html">View Cells</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_parser.html">View Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/view_decorators.html">View Decorators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/table.html">HTML Table Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/response.html">HTTP Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_responses.html">API Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/api_transformers.html">API Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/csp.html">Content Security Policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/localization.html">Localization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../outgoing/alternative_php.html">Alternate PHP Syntax for View Files</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database/index.html">Working with Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../database/examples.html">Quick Start: Usage Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/configuration.html">Database Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/connecting.html">Connecting to a Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/queries.html">Running Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/results.html">Generating Query Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/helpers.html">Query Helper Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/query_builder.html">Query Builder Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/transactions.html">Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/metadata.html">Getting Metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/call_function.html">Custom Function Calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/events.html">Database Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/utilities.html">Database Utilities</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Modeling Data</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Using CodeIgniter's Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="entities.html">Using Entity Classes</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dbmgmt/index.html">Managing Databases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/forge.html">Database Forge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/migration.html">Database Migrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/seeds.html">Database Seeding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dbmgmt/db_commands.html">Database Commands</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/index.html">Library Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/caching.html">Caching Driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cookies.html">Cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/cors.html">Cross-Origin Resource Sharing (CORS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/curlrequest.html">CURLRequest Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/email.html">Email Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/encryption.html">Encryption Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/files.html">Working with Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/file_collections.html">File Collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/honeypot.html">Honeypot Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/images.html">Image Manipulation Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/pagination.html">Pagination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/publisher.html">Publisher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/security.html">Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/sessions.html">Session Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/throttler.html">Throttler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/time.html">Times and Dates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/typography.html">Typography</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/uploaded_files.html">Working with Uploaded Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/uri.html">Working with URIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/user_agent.html">User Agent Class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libraries/validation.html">Validation</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../helpers/index.html">Helpers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/array_helper.html">Array Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/cookie_helper.html">Cookie Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/date_helper.html">Date Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/filesystem_helper.html">Filesystem Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/form_helper.html">Form Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/html_helper.html">HTML Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/inflector_helper.html">Inflector Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/number_helper.html">Number Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/security_helper.html">Security Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/test_helper.html">Test Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/text_helper.html">Text Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/url_helper.html">URL Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../helpers/xml_helper.html">XML Helper</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../testing/index.html">Testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../testing/overview.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/fabricator.html">Generating Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/controllers.html">Controller Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/feature.html">HTTP Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/response.html">Testing Responses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/cli.html">Testing CLI Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/mocking.html">Mocking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/benchmark.html">Benchmarking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/debugging.html">Debugging Your Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/session_testing.html">Session Testing</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">Command Line Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_overview.html">CLI Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_controllers.html">Running Controllers via CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/spark_commands.html">Spark Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_commands.html">Creating Spark Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_generators.html">CLI Generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_library.html">CLI Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_signals.html">CLI Signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/cli_request.html">CLIRequest Class</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending CodeIgniter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../extending/core_classes.html">Creating Core System Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/common.html">Replacing Common Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/events.html">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/basecontroller.html">Extending the Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/authentication.html">Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/composer_packages.html">Creating Composer Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/contributing.html">Contributing to CodeIgniter</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../libraries/official_packages.html">Official Packages</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CodeIgniter</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Modeling Data</a></li>
+      <li class="breadcrumb-item active">Using CodeIgniter’s Model</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="using-codeigniter-s-model">
+<h1>Using CodeIgniter’s Model<a class="headerlink" href="#using-codeigniter-s-model" title="Permalink to this heading"></a></h1>
+<nav class="contents local" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#models" id="id6">Models</a></p></li>
+<li><p><a class="reference internal" href="#accessing-models" id="id7">Accessing Models</a></p></li>
+<li><p><a class="reference internal" href="#codeigniter-s-model" id="id8">CodeIgniter’s Model</a></p></li>
+<li><p><a class="reference internal" href="#creating-your-model" id="id9">Creating Your Model</a></p>
+<ul>
+<li><p><a class="reference internal" href="#initialize" id="id10">initialize()</a></p></li>
+<li><p><a class="reference internal" href="#connecting-to-the-database" id="id11">Connecting to the Database</a></p></li>
+<li><p><a class="reference internal" href="#configuring-your-model" id="id12">Configuring Your Model</a></p>
+<ul>
+<li><p><a class="reference internal" href="#table" id="id13">$table</a></p></li>
+<li><p><a class="reference internal" href="#primarykey" id="id14">$primaryKey</a></p></li>
+<li><p><a class="reference internal" href="#useautoincrement" id="id15">$useAutoIncrement</a></p></li>
+<li><p><a class="reference internal" href="#returntype" id="id16">$returnType</a></p></li>
+<li><p><a class="reference internal" href="#usesoftdeletes" id="id17">$useSoftDeletes</a></p></li>
+<li><p><a class="reference internal" href="#allowedfields" id="id18">$allowedFields</a></p></li>
+<li><p><a class="reference internal" href="#allowemptyinserts" id="id19">$allowEmptyInserts</a></p></li>
+<li><p><a class="reference internal" href="#updateonlychanged" id="id20">$updateOnlyChanged</a></p></li>
+<li><p><a class="reference internal" href="#casts" id="id21">$casts</a></p></li>
+<li><p><a class="reference internal" href="#dates" id="id22">Dates</a></p></li>
+<li><p><a class="reference internal" href="#validation" id="id23">Validation</a></p></li>
+<li><p><a class="reference internal" href="#callbacks" id="id24">Callbacks</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#model-field-casting" id="id25">Model Field Casting</a></p>
+<ul>
+<li><p><a class="reference internal" href="#defining-data-types" id="id26">Defining Data Types</a></p></li>
+<li><p><a class="reference internal" href="#data-types" id="id27">Data Types</a></p>
+<ul>
+<li><p><a class="reference internal" href="#csv" id="id28">csv</a></p></li>
+<li><p><a class="reference internal" href="#datetime" id="id29">datetime</a></p></li>
+<li><p><a class="reference internal" href="#timestamp" id="id30">timestamp</a></p></li>
+<li><p><a class="reference internal" href="#enum" id="id31">enum</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#custom-casting" id="id32">Custom Casting</a></p>
+<ul>
+<li><p><a class="reference internal" href="#creating-custom-handlers" id="id33">Creating Custom Handlers</a></p></li>
+<li><p><a class="reference internal" href="#registering-custom-handlers" id="id34">Registering Custom Handlers</a></p></li>
+<li><p><a class="reference internal" href="#parameters" id="id35">Parameters</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#working-with-data" id="id36">Working with Data</a></p>
+<ul>
+<li><p><a class="reference internal" href="#finding-data" id="id37">Finding Data</a></p>
+<ul>
+<li><p><a class="reference internal" href="#find" id="id38">find()</a></p></li>
+<li><p><a class="reference internal" href="#findcolumn" id="id39">findColumn()</a></p></li>
+<li><p><a class="reference internal" href="#findall" id="id40">findAll()</a></p></li>
+<li><p><a class="reference internal" href="#first" id="id41">first()</a></p></li>
+<li><p><a class="reference internal" href="#withdeleted" id="id42">withDeleted()</a></p></li>
+<li><p><a class="reference internal" href="#onlydeleted" id="id43">onlyDeleted()</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#saving-data" id="id44">Saving Data</a></p>
+<ul>
+<li><p><a class="reference internal" href="#insert" id="id45">insert()</a></p></li>
+<li><p><a class="reference internal" href="#model-allow-empty-inserts" id="id46">allowEmptyInserts()</a></p></li>
+<li><p><a class="reference internal" href="#update" id="id47">update()</a></p></li>
+<li><p><a class="reference internal" href="#save" id="id48">save()</a></p></li>
+<li><p><a class="reference internal" href="#saving-dates" id="id49">Saving Dates</a></p></li>
+<li><p><a class="reference internal" href="#primary-key-validation" id="id50">Primary Key Validation</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#deleting-data" id="id51">Deleting Data</a></p>
+<ul>
+<li><p><a class="reference internal" href="#delete" id="id52">delete()</a></p></li>
+<li><p><a class="reference internal" href="#purgedeleted" id="id53">purgeDeleted()</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#in-model-validation" id="id54">In-Model Validation</a></p>
+<ul>
+<li><p><a class="reference internal" href="#validating-data" id="id55">Validating Data</a></p></li>
+<li><p><a class="reference internal" href="#setting-validation-rules" id="id56">Setting Validation Rules</a></p></li>
+<li><p><a class="reference internal" href="#getting-validation-result" id="id57">Getting Validation Result</a></p></li>
+<li><p><a class="reference internal" href="#getting-validation-errors" id="id58">Getting Validation Errors</a></p></li>
+<li><p><a class="reference internal" href="#retrieving-validation-rules" id="id59">Retrieving Validation Rules</a></p></li>
+<li><p><a class="reference internal" href="#validation-placeholders" id="id60">Validation Placeholders</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#protecting-fields" id="id61">Protecting Fields</a></p></li>
+<li><p><a class="reference internal" href="#runtime-return-type-changes" id="id62">Runtime Return Type Changes</a></p>
+<ul>
+<li><p><a class="reference internal" href="#asarray" id="id63">asArray()</a></p></li>
+<li><p><a class="reference internal" href="#asobject" id="id64">asObject()</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#processing-large-amounts-of-data" id="id65">Processing Large Amounts of Data</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#working-with-query-builder" id="id66">Working with Query Builder</a></p>
+<ul>
+<li><p><a class="reference internal" href="#getting-query-builder-for-the-model-s-table" id="id67">Getting Query Builder for the Model’s Table</a></p></li>
+<li><p><a class="reference internal" href="#getting-query-builder-for-another-table" id="id68">Getting Query Builder for Another Table</a></p></li>
+<li><p><a class="reference internal" href="#mixing-methods-of-query-builder-and-model" id="id69">Mixing Methods of Query Builder and Model</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#model-events" id="id70">Model Events</a></p>
+<ul>
+<li><p><a class="reference internal" href="#defining-callbacks" id="id71">Defining Callbacks</a></p></li>
+<li><p><a class="reference internal" href="#specifying-callbacks-to-run" id="id72">Specifying Callbacks To Run</a></p></li>
+<li><p><a class="reference internal" href="#event-parameters" id="id73">Event Parameters</a></p></li>
+<li><p><a class="reference internal" href="#modifying-find-data" id="id74">Modifying Find* Data</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#manual-model-creation" id="id75">Manual Model Creation</a></p></li>
+</ul>
+</nav>
+<section id="models">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Models</a><a class="headerlink" href="#models" title="Permalink to this heading"></a></h2>
+<p>The CodeIgniter’s Model provides convenience features and additional functionality
+that people commonly use to make working with a <strong>single table</strong> in your database more convenient.</p>
+<p>It comes out of the box with helper
+methods for much of the standard ways you would need to interact with a database table, including finding records,
+updating records, deleting records, and more.</p>
+</section>
+<section id="accessing-models">
+<span id="id1"></span><h2><a class="toc-backref" href="#id7" role="doc-backlink">Accessing Models</a><a class="headerlink" href="#accessing-models" title="Permalink to this heading"></a></h2>
+<p>Models are typically stored in the <strong>app/Models</strong> directory. They should have a namespace that matches their
+location within the directory, like <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">App\Models</span></code>.</p>
+<p>You can access models within your classes by creating a new instance or using the <a class="reference internal" href="../general/common_functions.html#model" title="model"><code class="xref php php-func docutils literal notranslate"><span class="pre">model()</span></code></a> helper function.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Create a new class manually.</span>
+<span class="nv">$userModel</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\App\Models\UserModel</span><span class="p">();</span>
+
+<span class="c1">// Create a shared instance of the model.</span>
+<span class="nv">$userModel</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">);</span>
+<span class="c1">// or</span>
+<span class="nv">$userModel</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;App\Models\UserModel&#39;</span><span class="p">);</span>
+<span class="c1">// or</span>
+<span class="nv">$userModel</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="nx">\App\Models\UserModel</span><span class="o">::</span><span class="na">class</span><span class="p">);</span>
+
+<span class="c1">// Create a new class with the model() function.</span>
+<span class="nv">$userModel</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+
+<span class="c1">// Create shared instance with a supplied database connection.</span>
+<span class="nv">$db</span>        <span class="o">=</span> <span class="nx">db_connect</span><span class="p">(</span><span class="s1">&#39;custom&#39;</span><span class="p">);</span>
+<span class="nv">$userModel</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;UserModel&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">,</span> <span class="nv">$db</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">model()</span></code> uses <code class="docutils literal notranslate"><span class="pre">Factories::models()</span></code> internally.
+See <a class="reference internal" href="../concepts/factories.html#factories-loading-class"><span class="std std-ref">Loading Classes</span></a> for details on the first parameter.</p>
+</section>
+<section id="codeigniter-s-model">
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">CodeIgniter’s Model</a><a class="headerlink" href="#codeigniter-s-model" title="Permalink to this heading"></a></h2>
+<p>CodeIgniter does provide a model class that has a few nice features, including:</p>
+<ul class="simple">
+<li><p>automatic database connection</p></li>
+<li><p>basic CRUD methods</p></li>
+<li><p><a class="reference internal" href="#in-model-validation"><span class="std std-ref">in-model validation</span></a></p></li>
+<li><p><a class="reference internal" href="../libraries/pagination.html#paginating-with-models"><span class="std std-ref">automatic pagination</span></a></p></li>
+<li><p>and more</p></li>
+</ul>
+<p>This class provides a solid base from which to build your own models, allowing you to
+rapidly build out your application’s model layer.</p>
+</section>
+<section id="creating-your-model">
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Creating Your Model</a><a class="headerlink" href="#creating-your-model" title="Permalink to this heading"></a></h2>
+<p>To take advantage of CodeIgniter’s model, you would simply create a new model class
+that extends <code class="docutils literal notranslate"><span class="pre">CodeIgniter\Model</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserModel</span> <span class="k">extends</span> <span class="nx">Model</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This empty class provides convenient access to the database connection, the Query Builder,
+and a number of additional convenience methods.</p>
+<section id="initialize">
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">initialize()</a><a class="headerlink" href="#initialize" title="Permalink to this heading"></a></h3>
+<p>Should you need additional setup in your model you may extend the <code class="docutils literal notranslate"><span class="pre">initialize()</span></code> method
+which will be run immediately after the Model’s constructor. This allows you to perform
+extra steps without repeating the constructor parameters, for example extending other models:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Modules\Authentication\Models\UserAuthModel</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserModel</span> <span class="k">extends</span> <span class="nx">UserAuthModel</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Called during initialization. Appends</span>
+<span class="sd">     * our custom field to the module&#39;s model.</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">initialize</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">allowedFields</span><span class="p">[]</span> <span class="o">=</span> <span class="s1">&#39;middlename&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="connecting-to-the-database">
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Connecting to the Database</a><a class="headerlink" href="#connecting-to-the-database" title="Permalink to this heading"></a></h3>
+<p>When the class is first instantiated, if no database connection instance is passed to the constructor,
+and if you don’t set the <code class="docutils literal notranslate"><span class="pre">$DBGroup</span></code> property on your model class,
+it will automatically connect to the default database group, as set in the database configuration.</p>
+<p>You can
+modify which group is used on a per-model basis by adding the <code class="docutils literal notranslate"><span class="pre">$DBGroup</span></code> property to your class.
+This ensures that within the model any references to <code class="docutils literal notranslate"><span class="pre">$this-&gt;db</span></code> are made through the appropriate
+connection.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserModel</span> <span class="k">extends</span> <span class="nx">Model</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$DBGroup</span> <span class="o">=</span> <span class="s1">&#39;group_name&#39;</span><span class="p">;</span>
+
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You would replace “group_name” with the name of a defined database group from the database
+configuration file.</p>
+</section>
+<section id="configuring-your-model">
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Configuring Your Model</a><a class="headerlink" href="#configuring-your-model" title="Permalink to this heading"></a></h3>
+<p>The model class has some configuration options that can be set to allow the class’ methods
+to work seamlessly for you. The first two are used by all of the CRUD methods to determine
+what table to use and how we can find the required records:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserModel</span> <span class="k">extends</span> <span class="nx">Model</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$table</span>      <span class="o">=</span> <span class="s1">&#39;users&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$primaryKey</span> <span class="o">=</span> <span class="s1">&#39;id&#39;</span><span class="p">;</span>
+
+    <span class="k">protected</span> <span class="nv">$useAutoIncrement</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+
+    <span class="k">protected</span> <span class="nv">$returnType</span>     <span class="o">=</span> <span class="s1">&#39;array&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$useSoftDeletes</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+
+    <span class="k">protected</span> <span class="nv">$allowedFields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">];</span>
+
+    <span class="k">protected</span> <span class="nx">bool</span> <span class="nv">$allowEmptyInserts</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nx">bool</span> <span class="nv">$updateOnlyChanged</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+
+    <span class="c1">// Dates</span>
+    <span class="k">protected</span> <span class="nv">$useTimestamps</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$dateFormat</span>    <span class="o">=</span> <span class="s1">&#39;datetime&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$createdField</span>  <span class="o">=</span> <span class="s1">&#39;created_at&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$updatedField</span>  <span class="o">=</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$deletedField</span>  <span class="o">=</span> <span class="s1">&#39;deleted_at&#39;</span><span class="p">;</span>
+
+    <span class="c1">// Validation</span>
+    <span class="k">protected</span> <span class="nv">$validationRules</span>      <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">protected</span> <span class="nv">$validationMessages</span>   <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">protected</span> <span class="nv">$skipValidation</span>       <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$cleanValidationRules</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+
+    <span class="c1">// Callbacks</span>
+    <span class="k">protected</span> <span class="nv">$allowCallbacks</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$beforeInsert</span>   <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">protected</span> <span class="nv">$afterInsert</span>    <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">protected</span> <span class="nv">$beforeUpdate</span>   <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">protected</span> <span class="nv">$afterUpdate</span>    <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">protected</span> <span class="nv">$beforeFind</span>     <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">protected</span> <span class="nv">$afterFind</span>      <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">protected</span> <span class="nv">$beforeDelete</span>   <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">protected</span> <span class="nv">$afterDelete</span>    <span class="o">=</span> <span class="p">[];</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<section id="table">
+<h4><a class="toc-backref" href="#id13" role="doc-backlink">$table</a><a class="headerlink" href="#table" title="Permalink to this heading"></a></h4>
+<p>Specifies the database table that this model primarily works with. This only applies to the
+built-in CRUD methods. You are not restricted to using only this table in your own
+queries.</p>
+</section>
+<section id="primarykey">
+<h4><a class="toc-backref" href="#id14" role="doc-backlink">$primaryKey</a><a class="headerlink" href="#primarykey" title="Permalink to this heading"></a></h4>
+<p>This is the name of the column that uniquely identifies the records in this table. This
+does not necessarily have to match the primary key that is specified in the database, but
+is used with methods like <code class="docutils literal notranslate"><span class="pre">find()</span></code> to know what column to match the specified value to.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All Models must have a primaryKey specified to allow all of the features to work
+as expected.</p>
+</div>
+</section>
+<section id="useautoincrement">
+<h4><a class="toc-backref" href="#id15" role="doc-backlink">$useAutoIncrement</a><a class="headerlink" href="#useautoincrement" title="Permalink to this heading"></a></h4>
+<p>Specifies if the table uses an auto-increment feature for <a class="reference internal" href="#primarykey">$primaryKey</a>. If set to <code class="docutils literal notranslate"><span class="pre">false</span></code>
+then you are responsible for providing primary key value for every record in the table. This
+feature may be handy when we want to implement 1:1 relation or use UUIDs for our model. The
+default value is <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you set <a class="reference internal" href="#useautoincrement">$useAutoIncrement</a> to <code class="docutils literal notranslate"><span class="pre">false</span></code>, then make sure to set your primary
+key in the database to <code class="docutils literal notranslate"><span class="pre">unique</span></code>. This way you will make sure that all of Model’s features
+will still work the same as before.</p>
+</div>
+</section>
+<section id="returntype">
+<h4><a class="toc-backref" href="#id16" role="doc-backlink">$returnType</a><a class="headerlink" href="#returntype" title="Permalink to this heading"></a></h4>
+<p>The Model’s <strong>find*()</strong> methods will take a step of work away from you and automatically
+return the resulting data, instead of the Result object.</p>
+<p>This setting allows you to define the type of data that is returned. Valid values
+are ‘<strong>array</strong>’ (the default), ‘<strong>object</strong>’, or the <strong>fully qualified name of a class</strong>
+that can be used with the Result object’s <code class="docutils literal notranslate"><span class="pre">getCustomResultObject()</span></code> method.</p>
+<p>Using the special <code class="docutils literal notranslate"><span class="pre">::class</span></code> constant of the class will allow most IDEs to
+auto-complete the name and allow functions like refactoring to better understand
+your code.</p>
+</section>
+<section id="usesoftdeletes">
+<span id="model-use-soft-deletes"></span><h4><a class="toc-backref" href="#id17" role="doc-backlink">$useSoftDeletes</a><a class="headerlink" href="#usesoftdeletes" title="Permalink to this heading"></a></h4>
+<p>If true, then any <code class="docutils literal notranslate"><span class="pre">delete()</span></code> method calls will set <code class="docutils literal notranslate"><span class="pre">deleted_at</span></code> in the database, instead of
+actually deleting the row. This can preserve data when it might be referenced elsewhere, or
+can maintain a “recycle bin” of objects that can be restored, or even simply preserve it as
+part of a security trail. If true, the <strong>find*()</strong> methods will only return non-deleted rows, unless
+the <code class="docutils literal notranslate"><span class="pre">withDeleted()</span></code> method is called prior to calling the <strong>find*()</strong> method.</p>
+<p>This requires either a DATETIME or INTEGER field in the database as per the model’s
+<a class="reference internal" href="#dateformat">$dateFormat</a> setting. The default field name is <code class="docutils literal notranslate"><span class="pre">deleted_at</span></code> however this name can be
+configured to any name of your choice by using <a class="reference internal" href="#deletedfield">$deletedField</a> property.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">deleted_at</span></code> field in the database must be nullable.</p>
+</div>
+</section>
+<section id="allowedfields">
+<span id="model-allowed-fields"></span><h4><a class="toc-backref" href="#id18" role="doc-backlink">$allowedFields</a><a class="headerlink" href="#allowedfields" title="Permalink to this heading"></a></h4>
+<p>This array should be updated with the field names that can be set during <code class="docutils literal notranslate"><span class="pre">save()</span></code>, <code class="docutils literal notranslate"><span class="pre">insert()</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">update()</span></code> methods. Any field names other than these will be discarded. This helps to protect
+against just taking input from a form and throwing it all at the model, resulting in
+potential mass assignment vulnerabilities.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a class="reference internal" href="#primarykey">$primaryKey</a> field should never be an allowed field.</p>
+</div>
+</section>
+<section id="allowemptyinserts">
+<h4><a class="toc-backref" href="#id19" role="doc-backlink">$allowEmptyInserts</a><a class="headerlink" href="#allowemptyinserts" title="Permalink to this heading"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<p>Whether to allow inserting empty data. The default value is <code class="docutils literal notranslate"><span class="pre">false</span></code>, meaning
+that if you try to insert empty data, <code class="docutils literal notranslate"><span class="pre">DataException</span></code> with
+“There is no data to insert.” will raise.</p>
+<p>You may also change this setting with the <a class="reference internal" href="#model-allow-empty-inserts"><span class="std std-ref">allowEmptyInserts()</span></a> method.</p>
+</section>
+<section id="updateonlychanged">
+<span id="model-update-only-changed"></span><h4><a class="toc-backref" href="#id20" role="doc-backlink">$updateOnlyChanged</a><a class="headerlink" href="#updateonlychanged" title="Permalink to this heading"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.5.0.</span></p>
+</div>
+<p>Whether to update <a class="reference internal" href="entities.html"><span class="doc">Entity</span></a>’s only changed fields. The default
+value is <code class="docutils literal notranslate"><span class="pre">true</span></code>, meaning that only changed field data is used when updating to
+the database. So if you try to update an Entity without changes, <code class="docutils literal notranslate"><span class="pre">DataException</span></code>
+with “There is no data to update.” will raise.</p>
+<p>Setting this property to <code class="docutils literal notranslate"><span class="pre">false</span></code> will ensure that all allowed fields of an Entity
+are submitted to the database and updated at any time.</p>
+</section>
+<section id="casts">
+<h4><a class="toc-backref" href="#id21" role="doc-backlink">$casts</a><a class="headerlink" href="#casts" title="Permalink to this heading"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.5.0.</span></p>
+</div>
+<p>This allows you to convert data retrieved from a database into the appropriate
+PHP type.
+This option should be an array where the key is the name of the field, and the
+value is the data type. See <a class="reference internal" href="#model-field-casting"><span class="std std-ref">Model Field Casting</span></a> for details.</p>
+</section>
+<section id="dates">
+<h4><a class="toc-backref" href="#id22" role="doc-backlink">Dates</a><a class="headerlink" href="#dates" title="Permalink to this heading"></a></h4>
+<section id="usetimestamps">
+<h5>$useTimestamps<a class="headerlink" href="#usetimestamps" title="Permalink to this heading"></a></h5>
+<p>This boolean value determines whether the current date is automatically added to all inserts
+and updates. If <code class="docutils literal notranslate"><span class="pre">true</span></code>, will set the current time in the format specified by <a class="reference internal" href="#dateformat">$dateFormat</a>. This
+requires that the table have columns named <strong>created_at</strong>, <strong>updated_at</strong> and <strong>deleted_at</strong> in the appropriate
+data type. See also <a class="reference internal" href="#createdfield">$createdField</a>, <a class="reference internal" href="#updatedfield">$updatedField</a>, and <a class="reference internal" href="#deletedfield">$deletedField</a>.</p>
+</section>
+<section id="dateformat">
+<h5>$dateFormat<a class="headerlink" href="#dateformat" title="Permalink to this heading"></a></h5>
+<p>This value works with <a class="reference internal" href="#usetimestamps">$useTimestamps</a> and <a class="reference internal" href="#usesoftdeletes">$useSoftDeletes</a> to ensure that the correct type of
+date value gets inserted into the database. By default, this creates DATETIME values, but
+valid options are: <code class="docutils literal notranslate"><span class="pre">'datetime'</span></code>, <code class="docutils literal notranslate"><span class="pre">'date'</span></code>, or <code class="docutils literal notranslate"><span class="pre">'int'</span></code> (a UNIX timestamp). Using <a class="reference internal" href="#usesoftdeletes">$useSoftDeletes</a> or
+<a class="reference internal" href="#usetimestamps">$useTimestamps</a> with an invalid or missing <a class="reference internal" href="#dateformat">$dateFormat</a> will cause an exception.</p>
+</section>
+<section id="createdfield">
+<h5>$createdField<a class="headerlink" href="#createdfield" title="Permalink to this heading"></a></h5>
+<p>Specifies which database field to use for data record create timestamp.
+Set to an empty string (<code class="docutils literal notranslate"><span class="pre">''</span></code>) to avoid updating it (even if <a class="reference internal" href="#usetimestamps">$useTimestamps</a> is enabled).</p>
+</section>
+<section id="updatedfield">
+<h5>$updatedField<a class="headerlink" href="#updatedfield" title="Permalink to this heading"></a></h5>
+<p>Specifies which database field should use for keep data record update timestamp.
+Set to an empty string (<code class="docutils literal notranslate"><span class="pre">''</span></code>) to avoid updating it (even <a class="reference internal" href="#usetimestamps">$useTimestamps</a> is enabled).</p>
+</section>
+<section id="deletedfield">
+<h5>$deletedField<a class="headerlink" href="#deletedfield" title="Permalink to this heading"></a></h5>
+<p>Specifies which database field to use for soft deletions. See <a class="reference internal" href="#model-use-soft-deletes"><span class="std std-ref">$useSoftDeletes</span></a>.</p>
+</section>
+</section>
+<section id="validation">
+<h4><a class="toc-backref" href="#id23" role="doc-backlink">Validation</a><a class="headerlink" href="#validation" title="Permalink to this heading"></a></h4>
+<section id="validationrules">
+<h5>$validationRules<a class="headerlink" href="#validationrules" title="Permalink to this heading"></a></h5>
+<p>Contains either an array of validation rules as described in <a class="reference internal" href="../libraries/validation.html#validation-array"><span class="std std-ref">How to Save Your Rules</span></a>
+or a string containing the name of a validation group, as described in the same section.
+See also <a class="reference internal" href="#model-setting-validation-rules"><span class="std std-ref">Setting Validation Rules</span></a>.</p>
+</section>
+<section id="validationmessages">
+<h5>$validationMessages<a class="headerlink" href="#validationmessages" title="Permalink to this heading"></a></h5>
+<p>Contains an array of custom error messages that should be used during validation, as
+described in <a class="reference internal" href="../libraries/validation.html#validation-custom-errors"><span class="std std-ref">Setting Custom Error Messages</span></a>. See also <a class="reference internal" href="#model-setting-validation-rules"><span class="std std-ref">Setting Validation Rules</span></a>.</p>
+</section>
+<section id="skipvalidation">
+<h5>$skipValidation<a class="headerlink" href="#skipvalidation" title="Permalink to this heading"></a></h5>
+<p>Whether validation should be skipped during all <strong>inserts</strong> and <strong>updates</strong>. The default
+value is <code class="docutils literal notranslate"><span class="pre">false</span></code>, meaning that data will always attempt to be validated. This is
+primarily used by the <code class="docutils literal notranslate"><span class="pre">skipValidation()</span></code> method, but may be changed to <code class="docutils literal notranslate"><span class="pre">true</span></code> so
+this model will never validate.</p>
+</section>
+<section id="cleanvalidationrules">
+<span id="clean-validation-rules"></span><h5>$cleanValidationRules<a class="headerlink" href="#cleanvalidationrules" title="Permalink to this heading"></a></h5>
+<p>Whether validation rules should be removed that do not exist in the passed data.
+This is used in <strong>updates</strong>.
+The default value is <code class="docutils literal notranslate"><span class="pre">true</span></code>, meaning that validation rules for the fields
+that are not present in the passed data will be (temporarily) removed before the validation.
+This is to avoid validation errors when updating only some fields.</p>
+<p>You can also change the value by the <code class="docutils literal notranslate"><span class="pre">cleanRules()</span></code> method.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior to v4.2.7, <code class="docutils literal notranslate"><span class="pre">$cleanValidationRules</span></code> did not work due to a bug.</p>
+</div>
+</section>
+</section>
+<section id="callbacks">
+<h4><a class="toc-backref" href="#id24" role="doc-backlink">Callbacks</a><a class="headerlink" href="#callbacks" title="Permalink to this heading"></a></h4>
+<section id="allowcallbacks">
+<h5>$allowCallbacks<a class="headerlink" href="#allowcallbacks" title="Permalink to this heading"></a></h5>
+<p>Whether the callbacks defined below should be used. See <a class="reference internal" href="#model-events"><span class="std std-ref">Model Events</span></a>.</p>
+</section>
+<section id="beforeinsert">
+<h5>$beforeInsert<a class="headerlink" href="#beforeinsert" title="Permalink to this heading"></a></h5>
+</section>
+<section id="afterinsert">
+<h5>$afterInsert<a class="headerlink" href="#afterinsert" title="Permalink to this heading"></a></h5>
+</section>
+<section id="beforeupdate">
+<h5>$beforeUpdate<a class="headerlink" href="#beforeupdate" title="Permalink to this heading"></a></h5>
+</section>
+<section id="afterupdate">
+<h5>$afterUpdate<a class="headerlink" href="#afterupdate" title="Permalink to this heading"></a></h5>
+</section>
+<section id="beforefind">
+<h5>$beforeFind<a class="headerlink" href="#beforefind" title="Permalink to this heading"></a></h5>
+</section>
+<section id="afterfind">
+<h5>$afterFind<a class="headerlink" href="#afterfind" title="Permalink to this heading"></a></h5>
+</section>
+<section id="beforedelete">
+<h5>$beforeDelete<a class="headerlink" href="#beforedelete" title="Permalink to this heading"></a></h5>
+</section>
+<section id="afterdelete">
+<h5>$afterDelete<a class="headerlink" href="#afterdelete" title="Permalink to this heading"></a></h5>
+</section>
+<section id="beforeinsertbatch">
+<h5>$beforeInsertBatch<a class="headerlink" href="#beforeinsertbatch" title="Permalink to this heading"></a></h5>
+</section>
+<section id="afterinsertbatch">
+<h5>$afterInsertBatch<a class="headerlink" href="#afterinsertbatch" title="Permalink to this heading"></a></h5>
+</section>
+<section id="beforeupdatebatch">
+<h5>$beforeUpdateBatch<a class="headerlink" href="#beforeupdatebatch" title="Permalink to this heading"></a></h5>
+</section>
+<section id="afterupdatebatch">
+<h5>$afterUpdateBatch<a class="headerlink" href="#afterupdatebatch" title="Permalink to this heading"></a></h5>
+<p>These arrays allow you to specify callback methods that will be run on the data at the
+time specified in the property name. See <a class="reference internal" href="#model-events"><span class="std std-ref">Model Events</span></a>.</p>
+</section>
+</section>
+</section>
+</section>
+<section id="model-field-casting">
+<span id="id2"></span><h2><a class="toc-backref" href="#id25" role="doc-backlink">Model Field Casting</a><a class="headerlink" href="#model-field-casting" title="Permalink to this heading"></a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.5.0.</span></p>
+</div>
+<p>When retrieving data from a database, data of integer type may be converted to
+string type in PHP. You may also want to convert date/time data into a Time
+object in PHP.</p>
+<p>Model Field Casting allows you to convert data retrieved from a database into
+the appropriate PHP type.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>If you use this feature with the <a class="reference internal" href="entities.html"><span class="doc">Entity</span></a>, do not use
+<a class="reference internal" href="entities.html#entities-property-casting"><span class="std std-ref">Entity Property Casting</span></a>. Using both casting
+at the same time does not work.</p>
+<p>Entity Property Casting works at (1)(4), but this casting works at (2)(3):</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nx">App</span> <span class="nx">Code</span><span class="p">]</span> <span class="o">---</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">--&gt;</span> <span class="p">[</span><span class="nx">Entity</span><span class="p">]</span> <span class="o">---</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">--&gt;</span> <span class="p">[</span><span class="nx">Database</span><span class="p">]</span>
+<span class="p">[</span><span class="nx">App</span> <span class="nx">Code</span><span class="p">]</span> <span class="o">&lt;--</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">---</span> <span class="p">[</span><span class="nx">Entity</span><span class="p">]</span> <span class="o">&lt;--</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">---</span> <span class="p">[</span><span class="nx">Database</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>When using this casting, Entity will have correct typed PHP values in the
+attributes. This behavior is completely different from the previous behavior.
+Do not expect the attributes hold raw data from database.</p>
+</div>
+<section id="defining-data-types">
+<h3><a class="toc-backref" href="#id26" role="doc-backlink">Defining Data Types</a><a class="headerlink" href="#defining-data-types" title="Permalink to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">$casts</span></code> property sets its definition. This option should be an array
+where the key is the name of the field, and the value is the data type:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserModel</span> <span class="k">extends</span> <span class="nx">Model</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+    <span class="k">protected</span> <span class="k">array</span> <span class="nv">$casts</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;id&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;int&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;birthdate&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;?datetime&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;hobbies&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;json-array&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;active&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;int-bool&#39;</span><span class="p">,</span>
+    <span class="p">];</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="data-types">
+<h3><a class="toc-backref" href="#id27" role="doc-backlink">Data Types</a><a class="headerlink" href="#data-types" title="Permalink to this heading"></a></h3>
+<p>The following types are provided by default. Add a question mark at the beginning
+of type to mark the field as nullable, i.e., <code class="docutils literal notranslate"><span class="pre">?int</span></code>, <code class="docutils literal notranslate"><span class="pre">?datetime</span></code>.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>PHP Value Type</p></th>
+<th class="head"><p>DB Column Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p>int</p></td>
+<td><p>int type</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">float</span></code></p></td>
+<td><p>float</p></td>
+<td><p>float (numeric) type</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>bool/int/string type</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">int-bool</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>int type (1 or 0)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">array</span></code></p></td>
+<td><p>array</p></td>
+<td><p>string type (serialized)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">csv</span></code></p></td>
+<td><p>array</p></td>
+<td><p>string type (CSV)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">json</span></code></p></td>
+<td><p>stdClass</p></td>
+<td><p>json/string type</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">json-array</span></code></p></td>
+<td><p>array</p></td>
+<td><p>json/string type</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">datetime</span></code></p></td>
+<td><p>Time</p></td>
+<td><p>datetime type</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">timestamp</span></code></p></td>
+<td><p>Time</p></td>
+<td><p>int type (UNIX timestamp)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">uri</span></code></p></td>
+<td><p>URI</p></td>
+<td><p>string type</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">enum</span></code></p></td>
+<td><p>Enum</p></td>
+<td><p>string/int type</p></td>
+</tr>
+</tbody>
+</table>
+<section id="csv">
+<h4><a class="toc-backref" href="#id28" role="doc-backlink">csv</a><a class="headerlink" href="#csv" title="Permalink to this heading"></a></h4>
+<p>Casting as <code class="docutils literal notranslate"><span class="pre">csv</span></code> uses PHP’s internal <code class="docutils literal notranslate"><span class="pre">implode()</span></code> and <code class="docutils literal notranslate"><span class="pre">explode()</span></code> functions
+and assumes all values are string-safe and free of commas. For more complex data
+casts try <code class="docutils literal notranslate"><span class="pre">array</span></code> or <code class="docutils literal notranslate"><span class="pre">json</span></code>.</p>
+</section>
+<section id="datetime">
+<h4><a class="toc-backref" href="#id29" role="doc-backlink">datetime</a><a class="headerlink" href="#datetime" title="Permalink to this heading"></a></h4>
+<p>You can pass a parameter like <code class="docutils literal notranslate"><span class="pre">datetime[ms]</span></code> for date/time with milliseconds,
+or <code class="docutils literal notranslate"><span class="pre">datetime[us]</span></code> for date/time with microseconds.</p>
+<p>The datetime format is set in the <code class="docutils literal notranslate"><span class="pre">dateFormat</span></code> array of the
+<a class="reference internal" href="../database/configuration.html#database-config-explanation-of-values"><span class="std std-ref">database configuration</span></a> in the
+<strong>app/Config/Database.php</strong> file.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When you set <code class="docutils literal notranslate"><span class="pre">ms</span></code> or <code class="docutils literal notranslate"><span class="pre">us</span></code> as a parameter, <strong>Model</strong> takes care of second’s
+fractional part of the Time. But <strong>Query Builder</strong> does not. So you still need
+to use the <code class="docutils literal notranslate"><span class="pre">format()</span></code> method when you pass the Time to Query Builder’s methods
+like <code class="docutils literal notranslate"><span class="pre">where()</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="nv">$model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">(</span><span class="s1">&#39;SomeModel&#39;</span><span class="p">);</span>
+
+<span class="nv">$now</span> <span class="o">=</span> <span class="nx">\CodeIgniter\I18n\Time</span><span class="o">::</span><span class="na">now</span><span class="p">();</span>
+
+<span class="c1">// The following code passes the microseconds to Query Builder.</span>
+<span class="nv">$model</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;my_dt_field&#39;</span><span class="p">,</span> <span class="nv">$now</span><span class="o">-&gt;</span><span class="na">format</span><span class="p">(</span><span class="s1">&#39;Y-m-d H:i:s.u&#39;</span><span class="p">))</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+<span class="c1">// Generates: SELECT * FROM `my_table` WHERE `my_dt_field` = &#39;2024-07-28 18:57:58.900326&#39;</span>
+
+<span class="c1">// But the following code loses the microseconds.</span>
+<span class="nv">$model</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;my_dt_field&#39;</span><span class="p">,</span> <span class="nv">$now</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+<span class="c1">// Generates: SELECT * FROM `my_table` WHERE `my_dt_field` = &#39;2024-07-28 18:57:58&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior to v4.6.0, you cannot use <code class="docutils literal notranslate"><span class="pre">ms</span></code> or <code class="docutils literal notranslate"><span class="pre">us</span></code> as a parameter.
+Because the second’s fractional part of Time was lost due to bugs.</p>
+</div>
+</section>
+<section id="timestamp">
+<h4><a class="toc-backref" href="#id30" role="doc-backlink">timestamp</a><a class="headerlink" href="#timestamp" title="Permalink to this heading"></a></h4>
+<p>The timezone of the <code class="docutils literal notranslate"><span class="pre">Time</span></code> instance created will be the default timezone
+(app’s timezone), not UTC.</p>
+</section>
+<section id="enum">
+<h4><a class="toc-backref" href="#id31" role="doc-backlink">enum</a><a class="headerlink" href="#enum" title="Permalink to this heading"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.7.0.</span></p>
+</div>
+<p>You can cast fields to PHP enums. You must specify the enum class name as a parameter,
+like <code class="docutils literal notranslate"><span class="pre">enum[App\Enums\StatusEnum]</span></code>.</p>
+<p>Enum casting supports:</p>
+<ul class="simple">
+<li><p><strong>Backed enums</strong> (string or int) - The backing value is stored in the database</p></li>
+<li><p><strong>Unit enums</strong> - The case name is stored in the database as a string</p></li>
+</ul>
+</section>
+</section>
+<section id="custom-casting">
+<h3><a class="toc-backref" href="#id32" role="doc-backlink">Custom Casting</a><a class="headerlink" href="#custom-casting" title="Permalink to this heading"></a></h3>
+<p>You can define your own conversion types.</p>
+<section id="creating-custom-handlers">
+<h4><a class="toc-backref" href="#id33" role="doc-backlink">Creating Custom Handlers</a><a class="headerlink" href="#creating-custom-handlers" title="Permalink to this heading"></a></h4>
+<p>At first you need to create a handler class for your type.
+Let’s say the class will be located in the <strong>app/Models/Cast</strong> directory:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models\Cast</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\DataCaster\Cast\BaseCast</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">InvalidArgumentException</span><span class="p">;</span>
+
+<span class="c1">// The class must inherit the CodeIgniter\DataCaster\Cast\BaseCast class</span>
+<span class="k">class</span> <span class="nc">CastBase64</span> <span class="k">extends</span> <span class="nx">BaseCast</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">get</span><span class="p">(</span>
+        <span class="nx">mixed</span> <span class="nv">$value</span><span class="p">,</span>
+        <span class="k">array</span> <span class="nv">$params</span> <span class="o">=</span> <span class="p">[],</span>
+        <span class="o">?</span><span class="nx">object</span> <span class="nv">$helper</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span>
+    <span class="p">)</span><span class="o">:</span> <span class="nx">string</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nb">is_string</span><span class="p">(</span><span class="nv">$value</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nx">self</span><span class="o">::</span><span class="na">invalidTypeValueError</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="nv">$decoded</span> <span class="o">=</span> <span class="nb">base64_decode</span><span class="p">(</span><span class="nv">$value</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$decoded</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nx">InvalidArgumentException</span><span class="p">(</span><span class="s1">&#39;Cannot decode: &#39;</span> <span class="o">.</span> <span class="nv">$value</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="nv">$decoded</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">set</span><span class="p">(</span>
+        <span class="nx">mixed</span> <span class="nv">$value</span><span class="p">,</span>
+        <span class="k">array</span> <span class="nv">$params</span> <span class="o">=</span> <span class="p">[],</span>
+        <span class="o">?</span><span class="nx">object</span> <span class="nv">$helper</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span>
+    <span class="p">)</span><span class="o">:</span> <span class="nx">string</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nb">is_string</span><span class="p">(</span><span class="nv">$value</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nx">self</span><span class="o">::</span><span class="na">invalidTypeValueError</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="nb">base64_encode</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If you don’t need to change values when getting or setting a value. Then just
+don’t implement the appropriate method:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models\Cast</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\DataCaster\Cast\BaseCast</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">InvalidArgumentException</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">CastBase64</span> <span class="k">extends</span> <span class="nx">BaseCast</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">get</span><span class="p">(</span>
+        <span class="nx">mixed</span> <span class="nv">$value</span><span class="p">,</span>
+        <span class="k">array</span> <span class="nv">$params</span> <span class="o">=</span> <span class="p">[],</span>
+        <span class="o">?</span><span class="nx">object</span> <span class="nv">$helper</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span>
+    <span class="p">)</span><span class="o">:</span> <span class="nx">string</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nb">is_string</span><span class="p">(</span><span class="nv">$value</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nx">self</span><span class="o">::</span><span class="na">invalidTypeValueError</span><span class="p">(</span><span class="nv">$value</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="nv">$decoded</span> <span class="o">=</span> <span class="nb">base64_decode</span><span class="p">(</span><span class="nv">$value</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$decoded</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nx">InvalidArgumentException</span><span class="p">(</span><span class="s1">&#39;Cannot decode: &#39;</span> <span class="o">.</span> <span class="nv">$value</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="nv">$decoded</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="registering-custom-handlers">
+<h4><a class="toc-backref" href="#id34" role="doc-backlink">Registering Custom Handlers</a><a class="headerlink" href="#registering-custom-handlers" title="Permalink to this heading"></a></h4>
+<p>Now you need to register it:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">App\Models\Cast\CastBase64</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyModel</span> <span class="k">extends</span> <span class="nx">Model</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="c1">// Specify the type for the field</span>
+    <span class="k">protected</span> <span class="k">array</span> <span class="nv">$casts</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;column1&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;base64&#39;</span><span class="p">,</span>
+    <span class="p">];</span>
+
+    <span class="c1">// Bind the type to the handler</span>
+    <span class="k">protected</span> <span class="k">array</span> <span class="nv">$castHandlers</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;base64&#39;</span> <span class="o">=&gt;</span> <span class="nx">CastBase64</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+    <span class="p">];</span>
+
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="parameters">
+<h4><a class="toc-backref" href="#id35" role="doc-backlink">Parameters</a><a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h4>
+<p>In some cases, one type is not enough. In this situation, you can use additional
+parameters. Additional parameters are indicated in square brackets and listed
+with a comma like <code class="docutils literal notranslate"><span class="pre">type[param1,</span> <span class="pre">param2]</span></code>.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">App\Models\Cast\SomeHandler</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyModel</span> <span class="k">extends</span> <span class="nx">Model</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="c1">// Define a type with parameters</span>
+    <span class="k">protected</span> <span class="k">array</span> <span class="nv">$casts</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;column1&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;class[App\SomeClass, param2, param3]&#39;</span><span class="p">,</span>
+    <span class="p">];</span>
+
+    <span class="c1">// Bind the type to the handler</span>
+    <span class="k">protected</span> <span class="k">array</span> <span class="nv">$castHandlers</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;class&#39;</span> <span class="o">=&gt;</span> <span class="nx">SomeHandler</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+    <span class="p">];</span>
+
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models\Cast</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\DataCaster\Cast\BaseCast</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">SomeHandler</span> <span class="k">extends</span> <span class="nx">BaseCast</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">get</span><span class="p">(</span>
+        <span class="nx">mixed</span> <span class="nv">$value</span><span class="p">,</span>
+        <span class="k">array</span> <span class="nv">$params</span> <span class="o">=</span> <span class="p">[],</span>
+        <span class="o">?</span><span class="nx">object</span> <span class="nv">$helper</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span>
+    <span class="p">)</span><span class="o">:</span> <span class="nx">mixed</span> <span class="p">{</span>
+        <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$params</span><span class="p">);</span>
+        <span class="cm">/*</span>
+<span class="cm">         * Output:</span>
+<span class="cm">         * array(3) {</span>
+<span class="cm">         *   [0]=&gt;</span>
+<span class="cm">         *   string(13) &quot;App\SomeClass&quot;</span>
+<span class="cm">         *   [1]=&gt;</span>
+<span class="cm">         *   string(6) &quot;param2&quot;</span>
+<span class="cm">         *   [2]=&gt;</span>
+<span class="cm">         *   string(6) &quot;param3&quot;</span>
+<span class="cm">         * }</span>
+<span class="cm">         */</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the casting type is marked as nullable like <code class="docutils literal notranslate"><span class="pre">?bool</span></code> and the passed
+value is not null, then the parameter with the value <code class="docutils literal notranslate"><span class="pre">nullable</span></code> will be
+passed to the casting type handler. If casting type has predefined parameters,
+then <code class="docutils literal notranslate"><span class="pre">nullable</span></code> will be added to the end of the list.</p>
+</div>
+</section>
+</section>
+</section>
+<section id="working-with-data">
+<h2><a class="toc-backref" href="#id36" role="doc-backlink">Working with Data</a><a class="headerlink" href="#working-with-data" title="Permalink to this heading"></a></h2>
+<section id="finding-data">
+<h3><a class="toc-backref" href="#id37" role="doc-backlink">Finding Data</a><a class="headerlink" href="#finding-data" title="Permalink to this heading"></a></h3>
+<p>Several functions are provided for doing basic CRUD work on your tables, including <code class="docutils literal notranslate"><span class="pre">find()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">insert()</span></code>, <code class="docutils literal notranslate"><span class="pre">update()</span></code>, <code class="docutils literal notranslate"><span class="pre">delete()</span></code> and more.</p>
+<section id="find">
+<h4><a class="toc-backref" href="#id38" role="doc-backlink">find()</a><a class="headerlink" href="#find" title="Permalink to this heading"></a></h4>
+<p>Returns a single row where the primary key matches the value passed in as the first parameter:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$userId</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The value is returned in the format specified in <a class="reference internal" href="#returntype">$returnType</a>.</p>
+<p>You can specify more than one row to return by passing an array of primaryKey values instead
+of just one:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If no parameters are passed in, <code class="docutils literal notranslate"><span class="pre">find()</span></code> will return all rows in that model’s table,
+effectively acting like <code class="docutils literal notranslate"><span class="pre">findAll()</span></code>, though less explicit.</p>
+</div>
+</section>
+<section id="findcolumn">
+<h4><a class="toc-backref" href="#id39" role="doc-backlink">findColumn()</a><a class="headerlink" href="#findcolumn" title="Permalink to this heading"></a></h4>
+<p>Returns null or an indexed array of column values:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">findColumn</span><span class="p">(</span><span class="nv">$columnName</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">$columnName</span></code> should be a name of single column else you will get the <code class="docutils literal notranslate"><span class="pre">DataException</span></code>.</p>
+</section>
+<section id="findall">
+<h4><a class="toc-backref" href="#id40" role="doc-backlink">findAll()</a><a class="headerlink" href="#findall" title="Permalink to this heading"></a></h4>
+<p>Returns all results:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>This query may be modified by interjecting Query Builder commands as needed prior to calling this method:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;active&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>You can pass in a limit and offset values as the first and second
+parameters, respectively:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">(</span><span class="nv">$limit</span><span class="p">,</span> <span class="nv">$offset</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="first">
+<h4><a class="toc-backref" href="#id41" role="doc-backlink">first()</a><a class="headerlink" href="#first" title="Permalink to this heading"></a></h4>
+<p>Returns the first row in the result set. This is best used in combination with the query builder.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$user</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">first</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+<section id="withdeleted">
+<h4><a class="toc-backref" href="#id42" role="doc-backlink">withDeleted()</a><a class="headerlink" href="#withdeleted" title="Permalink to this heading"></a></h4>
+<p>If <a class="reference internal" href="#usesoftdeletes">$useSoftDeletes</a> is true, then the <strong>find*()</strong> methods will not return any rows where <code class="docutils literal notranslate"><span class="pre">deleted_at</span> <span class="pre">IS</span> <span class="pre">NOT</span> <span class="pre">NULL</span></code>.
+To temporarily override this, you can use the <code class="docutils literal notranslate"><span class="pre">withDeleted()</span></code> method prior to calling the <strong>find*()</strong> method.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Only gets non-deleted rows (deleted = 0)</span>
+<span class="nv">$activeUsers</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+
+<span class="c1">// Gets all rows</span>
+<span class="nv">$allUsers</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">withDeleted</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+<section id="onlydeleted">
+<h4><a class="toc-backref" href="#id43" role="doc-backlink">onlyDeleted()</a><a class="headerlink" href="#onlydeleted" title="Permalink to this heading"></a></h4>
+<p>Whereas <code class="docutils literal notranslate"><span class="pre">withDeleted()</span></code> will return both deleted and not-deleted rows, this method modifies
+the next <strong>find*()</strong> methods to return only soft deleted rows:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$deletedUsers</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">onlyDeleted</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="saving-data">
+<h3><a class="toc-backref" href="#id44" role="doc-backlink">Saving Data</a><a class="headerlink" href="#saving-data" title="Permalink to this heading"></a></h3>
+<section id="insert">
+<h4><a class="toc-backref" href="#id45" role="doc-backlink">insert()</a><a class="headerlink" href="#insert" title="Permalink to this heading"></a></h4>
+<p>The first parameter is an associative array of data to create a new row of data in the database.
+If an object is passed instead of an array, it will attempt to convert it to an array.</p>
+<p>The array’s keys must match the name of the columns in the <a class="reference internal" href="#table">$table</a>, while the array’s values are the values to save for that key.</p>
+<p>The optional second parameter is of type boolean, and if it is set to false, the method will return a boolean value,
+which indicates the success or failure of the query.</p>
+<p>You can retrieve the last inserted row’s primary key using the <code class="docutils literal notranslate"><span class="pre">getInsertID()</span></code> method.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;darth&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;d.vader@theempire.com&#39;</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="c1">// Inserts data and returns inserted row&#39;s primary key</span>
+<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+
+<span class="c1">// Inserts data and returns true on success and false on failure</span>
+<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+
+<span class="c1">// Returns inserted row&#39;s primary key</span>
+<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">getInsertID</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+<section id="model-allow-empty-inserts">
+<span id="id3"></span><h4><a class="toc-backref" href="#id46" role="doc-backlink">allowEmptyInserts()</a><a class="headerlink" href="#model-allow-empty-inserts" title="Permalink to this heading"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.3.0.</span></p>
+</div>
+<p>You can use <code class="docutils literal notranslate"><span class="pre">allowEmptyInserts()</span></code> method to insert empty data. The Model throws an exception when you try to insert empty data by default. But if you call this method, the check will no longer be performed.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">allowEmptyInserts</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">([]);</span>
+</pre></div>
+</div>
+<p>You may also change this setting with the <a class="reference internal" href="#allowemptyinserts">$allowEmptyInserts</a> property.</p>
+<p>You can enable the check again by calling <code class="docutils literal notranslate"><span class="pre">allowEmptyInserts(false)</span></code>.</p>
+</section>
+<section id="update">
+<h4><a class="toc-backref" href="#id47" role="doc-backlink">update()</a><a class="headerlink" href="#update" title="Permalink to this heading"></a></h4>
+<p>Updates an existing record in the database. The first parameter is the <a class="reference internal" href="#primarykey">$primaryKey</a> of the record to update.
+An associative array of data is passed into this method as the second parameter. The array’s keys must match the name
+of the columns in a <a class="reference internal" href="#table">$table</a>, while the array’s values are the values to save for that key:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;darth&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;d.vader@theempire.com&#39;</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="nv">$id</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Since v4.3.0, this method raises a <code class="docutils literal notranslate"><span class="pre">DatabaseException</span></code>
+if it generates an SQL statement without a WHERE clause.
+In previous versions, if it is called without <a class="reference internal" href="#primarykey">$primaryKey</a> specified and
+an SQL statement was generated without a WHERE clause, the query would still
+execute and all records in the table would be updated.</p>
+</div>
+<p>Multiple records may be updated with a single call by passing an array of primary keys as the first parameter:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;active&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="nv">$data</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>When you need a more flexible solution, you can leave the parameters empty and it functions like the Query Builder’s
+update command, with the added benefit of validation, events, etc:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$userModel</span>
+    <span class="o">-&gt;</span><span class="na">whereIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+    <span class="o">-&gt;</span><span class="na">set</span><span class="p">([</span><span class="s1">&#39;active&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="o">-&gt;</span><span class="na">update</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+<section id="save">
+<span id="model-save"></span><h4><a class="toc-backref" href="#id48" role="doc-backlink">save()</a><a class="headerlink" href="#save" title="Permalink to this heading"></a></h4>
+<p>This is a wrapper around the <code class="docutils literal notranslate"><span class="pre">insert()</span></code> and <code class="docutils literal notranslate"><span class="pre">update()</span></code> methods that handle inserting or updating the record
+automatically, based on whether it finds an array key matching the <strong>primary key</strong> value:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Defined as a model property</span>
+<span class="nv">$primaryKey</span> <span class="o">=</span> <span class="s1">&#39;id&#39;</span><span class="p">;</span>
+
+<span class="c1">// Does an insert()</span>
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;darth&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;d.vader@theempire.com&#39;</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+
+<span class="c1">// Performs an update, since the primary key, &#39;id&#39;, is found.</span>
+<span class="nv">$data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;id&#39;</span>       <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;darth&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;d.vader@theempire.com&#39;</span><span class="p">,</span>
+<span class="p">];</span>
+<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The save method also can make working with custom class result objects much simpler by recognizing a non-simple
+object and grabbing its public and protected values into an array, which is then passed to the appropriate
+insert or update method. This allows you to work with Entity classes in a very clean way. Entity classes are
+simple classes that represent a single instance of an object type, like a user, a blog post, a job, etc. This
+class is responsible for maintaining the business logic surrounding the object itself, like formatting
+elements in a certain way, etc. They shouldn’t have any idea about how they are saved to the database. At their
+simplest, they might look like this:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Entities</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Job</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$id</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$name</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$description</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="fm">__get</span><span class="p">(</span><span class="nv">$key</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">property_exists</span><span class="p">(</span><span class="nv">$this</span><span class="p">,</span> <span class="nv">$key</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="p">{</span><span class="nv">$key</span><span class="p">};</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="fm">__set</span><span class="p">(</span><span class="nv">$key</span><span class="p">,</span> <span class="nv">$value</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">property_exists</span><span class="p">(</span><span class="nv">$this</span><span class="p">,</span> <span class="nv">$key</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="p">{</span><span class="nv">$key</span><span class="p">}</span> <span class="o">=</span> <span class="nv">$value</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A very simple model to work with this might look like:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">JobModel</span> <span class="k">extends</span> <span class="nx">Model</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$table</span>         <span class="o">=</span> <span class="s1">&#39;jobs&#39;</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$returnType</span>    <span class="o">=</span> <span class="nx">\App\Entities\Job</span><span class="o">::</span><span class="na">class</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="nv">$allowedFields</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">,</span>
+    <span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This model works with data from the <code class="docutils literal notranslate"><span class="pre">jobs</span></code> table, and returns all results as an instance of <code class="docutils literal notranslate"><span class="pre">App\Entities\Job</span></code>.
+When you need to persist that record to the database, you will need to either write custom methods, or use the
+model’s <code class="docutils literal notranslate"><span class="pre">save()</span></code> method to inspect the class, grab any public and private properties, and save them to the database:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Retrieve a Job instance</span>
+<span class="nv">$job</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="mi">15</span><span class="p">);</span>
+
+<span class="c1">// Make some changes</span>
+<span class="nv">$job</span><span class="o">-&gt;</span><span class="na">name</span> <span class="o">=</span> <span class="s1">&#39;Foobar&#39;</span><span class="p">;</span>
+
+<span class="c1">// Save the changes</span>
+<span class="nv">$model</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$job</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you find yourself working with Entities a lot, CodeIgniter provides a built-in <a class="reference internal" href="entities.html"><span class="doc">Entity class</span></a>
+that provides several handy features that make developing Entities simpler.</p>
+</div>
+</section>
+<section id="saving-dates">
+<span id="model-saving-dates"></span><h4><a class="toc-backref" href="#id49" role="doc-backlink">Saving Dates</a><a class="headerlink" href="#saving-dates" title="Permalink to this heading"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.5.0.</span></p>
+</div>
+<p>When saving data, if you pass <a class="reference internal" href="../libraries/time.html"><span class="doc">Time</span></a> instances, they are
+converted to strings with the format defined in <code class="docutils literal notranslate"><span class="pre">dateFormat['datetime']</span></code> and
+<code class="docutils literal notranslate"><span class="pre">dateFormat['date']</span></code> in the
+<a class="reference internal" href="../database/configuration.html#database-config-explanation-of-values"><span class="std std-ref">database configuration</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Prior to v4.5.0, the date/time formats were hard coded as <code class="docutils literal notranslate"><span class="pre">Y-m-d</span> <span class="pre">H:i:s</span></code>
+and <code class="docutils literal notranslate"><span class="pre">Y-m-d</span></code> in the Model class.</p>
+</div>
+</section>
+<section id="primary-key-validation">
+<h4><a class="toc-backref" href="#id50" role="doc-backlink">Primary Key Validation</a><a class="headerlink" href="#primary-key-validation" title="Permalink to this heading"></a></h4>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 4.7.0.</span></p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">insert()</span></code>, <code class="docutils literal notranslate"><span class="pre">insertBatch()</span></code> (when <a class="reference internal" href="#useautoincrement">$useAutoIncrement</a> is <code class="docutils literal notranslate"><span class="pre">false</span></code>), <code class="docutils literal notranslate"><span class="pre">update()</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">delete()</span></code> methods validate primary key values before executing database queries.
+Invalid values such as <code class="docutils literal notranslate"><span class="pre">null</span></code>, <code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">'0'</span></code>, empty strings, booleans, empty arrays,
+or nested arrays will throw an <code class="docutils literal notranslate"><span class="pre">InvalidArgumentException</span></code> with a specific error message.</p>
+<p>If you need to customize this behavior (e.g., to allow <code class="docutils literal notranslate"><span class="pre">0</span></code> as a valid primary key for
+legacy systems), you can override the <code class="docutils literal notranslate"><span class="pre">validateID()</span></code> method in your model.</p>
+</section>
+</section>
+<section id="deleting-data">
+<h3><a class="toc-backref" href="#id51" role="doc-backlink">Deleting Data</a><a class="headerlink" href="#deleting-data" title="Permalink to this heading"></a></h3>
+<section id="delete">
+<h4><a class="toc-backref" href="#id52" role="doc-backlink">delete()</a><a class="headerlink" href="#delete" title="Permalink to this heading"></a></h4>
+<p>Takes a primary key value as the first parameter and deletes the matching record from the model’s table:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="mi">12</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>If the model’s <a class="reference internal" href="#usesoftdeletes">$useSoftDeletes</a> value is true, this will update the row to set <code class="docutils literal notranslate"><span class="pre">deleted_at</span></code> to the current
+date and time. You can force a permanent delete by setting the second parameter as true.</p>
+<p>An array of primary keys can be passed in as the first parameter to delete multiple records at once:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>If no parameters are passed in, will act like the Query Builder’s delete method, requiring a where call
+previously:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+<section id="purgedeleted">
+<h4><a class="toc-backref" href="#id53" role="doc-backlink">purgeDeleted()</a><a class="headerlink" href="#purgedeleted" title="Permalink to this heading"></a></h4>
+<p>Cleans out the database table by permanently removing all rows that have ‘deleted_at IS NOT NULL’.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">purgeDeleted</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="in-model-validation">
+<span id="id4"></span><h3><a class="toc-backref" href="#id54" role="doc-backlink">In-Model Validation</a><a class="headerlink" href="#in-model-validation" title="Permalink to this heading"></a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In-Model validation is performed just before data is stored in the
+database. Prior to that point, the data has not yet been validated. Processing
+user-input data prior to validation may introduce vulnerabilities.</p>
+</div>
+<section id="validating-data">
+<h4><a class="toc-backref" href="#id55" role="doc-backlink">Validating Data</a><a class="headerlink" href="#validating-data" title="Permalink to this heading"></a></h4>
+<p>The Model class provides a way to automatically have all data validated
+prior to saving to the database with the <code class="docutils literal notranslate"><span class="pre">insert()</span></code>, <code class="docutils literal notranslate"><span class="pre">update()</span></code>, or <code class="docutils literal notranslate"><span class="pre">save()</span></code> methods.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>When you update data, by default, the validation in the model class only
+validates provided fields. This is to avoid validation errors when updating only some fields.</p>
+<p>However, this means that not all validation rules you set will be checked
+during updates. Thus, incomplete data may pass the validation.</p>
+<p>For example, <code class="docutils literal notranslate"><span class="pre">required*</span></code> rules or <code class="docutils literal notranslate"><span class="pre">is_unique</span></code> rule that require the
+values of other fields may not work as expected.</p>
+<p>To avoid such glitches, this behavior can be changed by configuration. See
+<a class="reference internal" href="#clean-validation-rules"><span class="std std-ref">$cleanValidationRules</span></a> for details.</p>
+</div>
+</section>
+<section id="setting-validation-rules">
+<span id="model-setting-validation-rules"></span><h4><a class="toc-backref" href="#id56" role="doc-backlink">Setting Validation Rules</a><a class="headerlink" href="#setting-validation-rules" title="Permalink to this heading"></a></h4>
+<p>The first step is to fill out the <a class="reference internal" href="#validationrules">$validationRules</a> class property with the
+fields and rules that should be applied.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can see the list of built-in Validation rules in <a class="reference internal" href="../libraries/validation.html#validation-available-rules"><span class="std std-ref">Available Rules</span></a>.</p>
+</div>
+<p>If you have custom error message that you want to use, place them in the <a class="reference internal" href="#validationmessages">$validationMessages</a> array:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserModel</span> <span class="k">extends</span> <span class="nx">Model</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">protected</span> <span class="nv">$validationRules</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;username&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[30]|alpha_numeric_space|min_length[3]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;email&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[254]|valid_email|is_unique[users.email]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;password&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[255]|min_length[8]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;pass_confirm&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required_with[password]|max_length[255]|matches[password]&#39;</span><span class="p">,</span>
+    <span class="p">];</span>
+    <span class="k">protected</span> <span class="nv">$validationMessages</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">&#39;is_unique&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Sorry. That email has already been taken. Please choose another.&#39;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If you’d rather organize your rules and error messages within the
+<a class="reference internal" href="../libraries/validation.html#saving-validation-rules-to-config-file"><span class="std std-ref">Validation Config File</span></a>, you can
+do that and simply set <a class="reference internal" href="#validationrules">$validationRules</a> to the name of the validation rule
+group you created:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserModel</span> <span class="k">extends</span> <span class="nx">Model</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">protected</span> <span class="nv">$validationRules</span> <span class="o">=</span> <span class="s1">&#39;users&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The other way to set the validation rules to fields by functions,</p>
+<span class="target" id="namespace-CodeIgniter"></span><dl class="php class">
+<dt class="sig sig-object php" id="CodeIgniter\Model">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">CodeIgniter\</span></span><span class="sig-name descname"><span class="pre">Model</span></span><a class="headerlink" href="#CodeIgniter\Model" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\Model::setValidationRule">
+<span class="sig-prename descclassname"><span class="pre">CodeIgniter\Model::</span></span><span class="sig-name descname"><span class="pre">setValidationRule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em>, <em class="sig-param"><span class="pre">$fieldRules</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Model::setValidationRule" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$field</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – </p></li>
+<li><p><strong>$fieldRules</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – </p></li>
+</ul>
+</dd>
+</dl>
+<p>This function will set the field validation rules.</p>
+<p>Usage example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$fieldName</span>  <span class="o">=</span> <span class="s1">&#39;username&#39;</span><span class="p">;</span>
+<span class="nv">$fieldRules</span> <span class="o">=</span> <span class="s1">&#39;required|max_length[30]|alpha_numeric_space|min_length[3]&#39;</span><span class="p">;</span>
+
+<span class="nv">$model</span><span class="o">-&gt;</span><span class="na">setValidationRule</span><span class="p">(</span><span class="nv">$fieldName</span><span class="p">,</span> <span class="nv">$fieldRules</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\Model::setValidationRules">
+<span class="sig-prename descclassname"><span class="pre">CodeIgniter\Model::</span></span><span class="sig-name descname"><span class="pre">setValidationRules</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$validationRules</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Model::setValidationRules" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$validationRules</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – </p></li>
+</ul>
+</dd>
+</dl>
+<p>This function will set the validation rules.</p>
+<p>Usage example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$validationRules</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[30]|alpha_numeric_space|min_length[3]&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span>    <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;rules&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[254]|valid_email|is_unique[users.email]&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="s1">&#39;required&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;We really need your email.&#39;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">],</span>
+<span class="p">];</span>
+<span class="nv">$model</span><span class="o">-&gt;</span><span class="na">setValidationRules</span><span class="p">(</span><span class="nv">$validationRules</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p>The other way to set the validation message to fields by functions,</p>
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\Model::setValidationMessage">
+<span class="sig-prename descclassname"><span class="pre">CodeIgniter\Model::</span></span><span class="sig-name descname"><span class="pre">setValidationMessage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$field</span></em>, <em class="sig-param"><span class="pre">$fieldMessages</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Model::setValidationMessage" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$field</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">string</span></code></span>) – </p></li>
+<li><p><strong>$fieldMessages</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – </p></li>
+</ul>
+</dd>
+</dl>
+<p>This function will set the field wise error messages.</p>
+<p>Usage example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$fieldName</span>              <span class="o">=</span> <span class="s1">&#39;name&#39;</span><span class="p">;</span>
+<span class="nv">$fieldValidationMessage</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;required&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Your name is required here&#39;</span><span class="p">,</span>
+<span class="p">];</span>
+<span class="nv">$model</span><span class="o">-&gt;</span><span class="na">setValidationMessage</span><span class="p">(</span><span class="nv">$fieldName</span><span class="p">,</span> <span class="nv">$fieldValidationMessage</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="php method">
+<dt class="sig sig-object php" id="CodeIgniter\Model::setValidationMessages">
+<span class="sig-prename descclassname"><span class="pre">CodeIgniter\Model::</span></span><span class="sig-name descname"><span class="pre">setValidationMessages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">$validationMessages</span></em><span class="sig-paren">)</span><a class="headerlink" href="#CodeIgniter\Model::setValidationMessages" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>$validationMessages</strong> (<span><code class="xref php php-obj docutils literal notranslate"><span class="pre">array</span></code></span>) – </p></li>
+</ul>
+</dd>
+</dl>
+<p>This function will set the field messages.</p>
+<p>Usage example:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$fieldValidationMessage</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;required&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;Your baby name is missing.&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;min_length&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Too short, man!&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
+<span class="p">];</span>
+<span class="nv">$model</span><span class="o">-&gt;</span><span class="na">setValidationMessages</span><span class="p">(</span><span class="nv">$fieldValidationMessage</span><span class="p">);</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="getting-validation-result">
+<h4><a class="toc-backref" href="#id57" role="doc-backlink">Getting Validation Result</a><a class="headerlink" href="#getting-validation-result" title="Permalink to this heading"></a></h4>
+<p>Now, whenever you call the <code class="docutils literal notranslate"><span class="pre">insert()</span></code>, <code class="docutils literal notranslate"><span class="pre">update()</span></code>, or <code class="docutils literal notranslate"><span class="pre">save()</span></code> methods, the data will be validated. If it fails,
+the model will return boolean <strong>false</strong>.</p>
+</section>
+<section id="getting-validation-errors">
+<span id="model-getting-validation-errors"></span><h4><a class="toc-backref" href="#id58" role="doc-backlink">Getting Validation Errors</a><a class="headerlink" href="#getting-validation-errors" title="Permalink to this heading"></a></h4>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">errors()</span></code> method to retrieve the validation errors:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nv">$model</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span> <span class="o">===</span> <span class="k">false</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">&#39;updateUser&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;errors&#39;</span> <span class="o">=&gt;</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">errors</span><span class="p">()]);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This returns an array with the field names and their associated errors that can be used to either show all of the
+errors at the top of the form, or to display them individually:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="k">empty</span><span class="p">(</span><span class="nv">$errors</span><span class="p">))</span><span class="o">:</span> <span class="cp">?&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;alert alert-danger&quot;</span><span class="p">&gt;</span>
+    <span class="cp">&lt;?php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$errors</span> <span class="k">as</span> <span class="nv">$field</span> <span class="o">=&gt;</span> <span class="nv">$error</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
+        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span><span class="cp">&lt;?</span><span class="o">=</span> <span class="nx">esc</span><span class="p">(</span><span class="nv">$error</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="cp">&lt;?php</span> <span class="k">endforeach</span> <span class="cp">?&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="cp">&lt;?php</span> <span class="k">endif</span> <span class="cp">?&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="retrieving-validation-rules">
+<h4><a class="toc-backref" href="#id59" role="doc-backlink">Retrieving Validation Rules</a><a class="headerlink" href="#retrieving-validation-rules" title="Permalink to this heading"></a></h4>
+<p>You can retrieve a model’s validation rules by accessing its <code class="docutils literal notranslate"><span class="pre">validationRules</span></code>
+property:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$rules</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">validationRules</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>You can also retrieve just a subset of those rules by calling the accessor
+method directly, with options:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$rules</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getValidationRules</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">$options</span></code> parameter is an associative array with one element,
+whose key is either <code class="docutils literal notranslate"><span class="pre">'except'</span></code> or <code class="docutils literal notranslate"><span class="pre">'only'</span></code>, and which has as its
+value an array of fieldnames of interest:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// get the rules for all but the &quot;username&quot; field</span>
+<span class="nv">$rules</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getValidationRules</span><span class="p">([</span><span class="s1">&#39;except&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]]);</span>
+<span class="c1">// get the rules for only the &quot;city&quot; and &quot;state&quot; fields</span>
+<span class="nv">$rules</span> <span class="o">=</span> <span class="nv">$model</span><span class="o">-&gt;</span><span class="na">getValidationRules</span><span class="p">([</span><span class="s1">&#39;only&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;city&#39;</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">]]);</span>
+</pre></div>
+</div>
+</section>
+<section id="validation-placeholders">
+<h4><a class="toc-backref" href="#id60" role="doc-backlink">Validation Placeholders</a><a class="headerlink" href="#validation-placeholders" title="Permalink to this heading"></a></h4>
+<p>The model provides a simple method to replace parts of your rules based on data that’s being passed into it. This
+sounds fairly obscure but can be especially handy with the <code class="docutils literal notranslate"><span class="pre">is_unique</span></code> validation rule. Placeholders are simply
+the name of the field (or array key) that was passed in as <code class="docutils literal notranslate"><span class="pre">$data</span></code> surrounded by curly brackets. It will be
+replaced by the <strong>value</strong> of the matched incoming field. An example should clarify this:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyModel</span> <span class="k">extends</span> <span class="nx">Model</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">protected</span> <span class="nv">$validationRules</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;max_length[19]|is_natural_no_zero&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[254]|valid_email|is_unique[users.email,id,{id}]&#39;</span><span class="p">,</span>
+    <span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v4.3.5, you must set the validation rules for the placeholder
+field (<code class="docutils literal notranslate"><span class="pre">id</span></code>).</p>
+</div>
+<p>In this set of rules, it states that the email address should be unique in the database, except for the row
+that has an id matching the placeholder’s value. Assuming that the form POST data had the following:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$_POST</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;foo@example.com&#39;</span><span class="p">,</span>
+<span class="p">];</span>
+</pre></div>
+</div>
+<p>then the <code class="docutils literal notranslate"><span class="pre">{id}</span></code> placeholder would be replaced with the number <strong>4</strong>, giving this revised rule:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyModel</span> <span class="k">extends</span> <span class="nx">Model</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">protected</span> <span class="nv">$validationRules</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;id&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;max_length[19]|is_natural_no_zero&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;required|max_length[254]|valid_email|is_unique[users.email,id,4]&#39;</span><span class="p">,</span>
+    <span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>So it will ignore the row in the database that has <code class="docutils literal notranslate"><span class="pre">id=4</span></code> when it verifies the email is unique.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since v4.3.5, if the placeholder (<code class="docutils literal notranslate"><span class="pre">id</span></code>) value does not pass the
+validation, the placeholder would not be replaced.</p>
+</div>
+<p>This can also be used to create more dynamic rules at runtime, as long as you take care that any dynamic
+keys passed in don’t conflict with your form data.</p>
+</section>
+</section>
+<section id="protecting-fields">
+<h3><a class="toc-backref" href="#id61" role="doc-backlink">Protecting Fields</a><a class="headerlink" href="#protecting-fields" title="Permalink to this heading"></a></h3>
+<p>To help protect against Mass Assignment Attacks, the Model class <strong>requires</strong> that you list all of the field names
+that can be changed during inserts and updates in the <a class="reference internal" href="#allowedfields">$allowedFields</a> class property. Any data provided
+in addition to these will be removed prior to hitting the database. This is great for ensuring that timestamps,
+or primary keys do not get changed.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyModel</span> <span class="k">extends</span> <span class="nx">Model</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">protected</span> <span class="nv">$allowedFields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;address&#39;</span><span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Occasionally, you will find times where you need to be able to change these elements. This is often during
+testing, migrations, or seeds. In these cases, you can turn the protection on or off:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$model</span><span class="o">-&gt;</span><span class="na">protect</span><span class="p">(</span><span class="k">false</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">protect</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="runtime-return-type-changes">
+<h3><a class="toc-backref" href="#id62" role="doc-backlink">Runtime Return Type Changes</a><a class="headerlink" href="#runtime-return-type-changes" title="Permalink to this heading"></a></h3>
+<p>You can specify the format that data should be returned as when using the <strong>find*()</strong> methods as the class property,
+<a class="reference internal" href="#returntype">$returnType</a>. There may be times that you would like the data back in a different format, though. The Model
+provides methods that allow you to do just that.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These methods only change the return type for the next <strong>find*()</strong> method call. After that,
+it is reset to its default value.</p>
+</div>
+<section id="asarray">
+<h4><a class="toc-backref" href="#id63" role="doc-backlink">asArray()</a><a class="headerlink" href="#asarray" title="Permalink to this heading"></a></h4>
+<p>Returns data from the next <strong>find*()</strong> method as associative arrays:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">asArray</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;active&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+<section id="asobject">
+<h4><a class="toc-backref" href="#id64" role="doc-backlink">asObject()</a><a class="headerlink" href="#asobject" title="Permalink to this heading"></a></h4>
+<p>Returns data from the next <strong>find*()</strong> method as standard objects or custom class instances:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="c1">// Return as standard objects</span>
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">asObject</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;active&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+
+<span class="c1">// Return as custom class instances</span>
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">asObject</span><span class="p">(</span><span class="s1">&#39;User&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;active&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="processing-large-amounts-of-data">
+<h3><a class="toc-backref" href="#id65" role="doc-backlink">Processing Large Amounts of Data</a><a class="headerlink" href="#processing-large-amounts-of-data" title="Permalink to this heading"></a></h3>
+<p>Sometimes, you need to process large amounts of data and would run the risk of running out of memory.
+To make this simpler, you may use the chunk() method to get smaller chunks of data that you can then
+do your work on. The first parameter is the number of rows to retrieve in a single chunk. The second
+parameter is a Closure that will be called for each row of data.</p>
+<p>This is best used during cronjobs, data exports, or other large tasks.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">chunk</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="k">static</span> <span class="k">function</span> <span class="p">(</span><span class="nv">$data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// do something.</span>
+    <span class="c1">// $data is a single row of data.</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="working-with-query-builder">
+<span id="model-events-callbacks"></span><h2><a class="toc-backref" href="#id66" role="doc-backlink">Working with Query Builder</a><a class="headerlink" href="#working-with-query-builder" title="Permalink to this heading"></a></h2>
+<section id="getting-query-builder-for-the-model-s-table">
+<h3><a class="toc-backref" href="#id67" role="doc-backlink">Getting Query Builder for the Model’s Table</a><a class="headerlink" href="#getting-query-builder-for-the-model-s-table" title="Permalink to this heading"></a></h3>
+<p>CodeIgniter Model has one instance of the Query Builder for that model’s database connection.
+You can get access to the <strong>shared</strong> instance of the Query Builder any time you need it:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$builder</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">builder</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>This builder is already set up with the model’s <a class="reference internal" href="#table">$table</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Once you get the Query Builder instance, you can call methods of the
+<a class="reference internal" href="../database/query_builder.html"><span class="doc">Query Builder</span></a>.
+However, since Query Builder is not a Model, you cannot call methods of the Model.</p>
+</div>
+</section>
+<section id="getting-query-builder-for-another-table">
+<h3><a class="toc-backref" href="#id68" role="doc-backlink">Getting Query Builder for Another Table</a><a class="headerlink" href="#getting-query-builder-for-another-table" title="Permalink to this heading"></a></h3>
+<p>If you need access to another table, you can get another instance of the Query Builder.
+Pass the table name in as a parameter, but be aware that this will <strong>not</strong> return
+a shared instance:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$groupBuilder</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">builder</span><span class="p">(</span><span class="s1">&#39;groups&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="mixing-methods-of-query-builder-and-model">
+<h3><a class="toc-backref" href="#id69" role="doc-backlink">Mixing Methods of Query Builder and Model</a><a class="headerlink" href="#mixing-methods-of-query-builder-and-model" title="Permalink to this heading"></a></h3>
+<p>You can also use Query Builder methods and the Model’s CRUD methods in the same chained call, allowing for
+very elegant use:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$users</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">where</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="s1">&#39;active&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">orderBy</span><span class="p">(</span><span class="s1">&#39;last_login&#39;</span><span class="p">,</span> <span class="s1">&#39;asc&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">findAll</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>In this case, it operates on the shared instance of the Query Builder held by the model.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The Model does not provide a perfect interface to the Query Builder.
+The Model and the Query Builder are separate classes with different purposes.
+They should not be expected to return the same data.</p>
+</div>
+<p>If the Query Builder returns a result, it is returned as is.
+In that case, the result may be different from the one returned by the model’s method
+and may not be what was expected. The model’s events are not triggered.</p>
+<p>To prevent unexpected behavior, do not use Query Builder methods that return results
+and specify the model’s method at the end of the method chaining.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can also access the model’s database connection seamlessly:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$userName</span> <span class="o">=</span> <span class="nv">$userModel</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="nv">$name</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="model-events">
+<span id="id5"></span><h2><a class="toc-backref" href="#id70" role="doc-backlink">Model Events</a><a class="headerlink" href="#model-events" title="Permalink to this heading"></a></h2>
+<p>There are several points within the model’s execution that you can specify multiple callback methods to run.
+These methods can be used to normalize data, hash passwords, save related entities, and much more.</p>
+<p>The following
+points in the model’s execution can be affected, each through a class property:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#beforeinsert">$beforeInsert</a>, <a class="reference internal" href="#afterinsert">$afterInsert</a></p></li>
+<li><p><a class="reference internal" href="#beforeupdate">$beforeUpdate</a>, <a class="reference internal" href="#afterupdate">$afterUpdate</a></p></li>
+<li><p><a class="reference internal" href="#beforefind">$beforeFind</a>, <a class="reference internal" href="#afterfind">$afterFind</a></p></li>
+<li><p><a class="reference internal" href="#beforedelete">$beforeDelete</a>, <a class="reference internal" href="#afterdelete">$afterDelete</a></p></li>
+<li><p><a class="reference internal" href="#beforeinsertbatch">$beforeInsertBatch</a>, <a class="reference internal" href="#afterinsertbatch">$afterInsertBatch</a></p></li>
+<li><p><a class="reference internal" href="#beforeupdatebatch">$beforeUpdateBatch</a>, <a class="reference internal" href="#afterupdatebatch">$afterUpdateBatch</a></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">$beforeInsertBatch</span></code>, <code class="docutils literal notranslate"><span class="pre">$afterInsertBatch</span></code>, <code class="docutils literal notranslate"><span class="pre">$beforeUpdateBatch</span></code> and
+<code class="docutils literal notranslate"><span class="pre">$afterUpdateBatch</span></code> can be used since v4.3.0.</p>
+</div>
+<section id="defining-callbacks">
+<h3><a class="toc-backref" href="#id71" role="doc-backlink">Defining Callbacks</a><a class="headerlink" href="#defining-callbacks" title="Permalink to this heading"></a></h3>
+<p>You specify the callbacks by first creating a new class method in your model to use.</p>
+<p>This class method will always receive a <code class="docutils literal notranslate"><span class="pre">$data</span></code> array as its only parameter.</p>
+<p>The exact contents of the <code class="docutils literal notranslate"><span class="pre">$data</span></code> array will vary between events, but will always
+contain a key named <code class="docutils literal notranslate"><span class="pre">data</span></code> that contains the primary data passed to the original
+method. In the case of the <strong>insert*()</strong> or <strong>update*()</strong> methods, that will be
+the key/value pairs that are being inserted into the database. The main <code class="docutils literal notranslate"><span class="pre">$data</span></code>
+array will also contain the other values passed to the method, and be detailed
+in <a class="reference internal" href="#event-parameters">Event Parameters</a>.</p>
+<p>The callback method must return the original <code class="docutils literal notranslate"><span class="pre">$data</span></code> array so other callbacks
+have the full information.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyModel</span> <span class="k">extends</span> <span class="nx">Model</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">hashPassword</span><span class="p">(</span><span class="k">array</span> <span class="nv">$data</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;password&#39;</span><span class="p">]))</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nv">$data</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;password_hash&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">password_hash</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;password&#39;</span><span class="p">],</span> <span class="nx">PASSWORD_DEFAULT</span><span class="p">);</span>
+        <span class="nb">unset</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;password&#39;</span><span class="p">]);</span>
+
+        <span class="k">return</span> <span class="nv">$data</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="specifying-callbacks-to-run">
+<h3><a class="toc-backref" href="#id72" role="doc-backlink">Specifying Callbacks To Run</a><a class="headerlink" href="#specifying-callbacks-to-run" title="Permalink to this heading"></a></h3>
+<p>You specify when to run the callbacks by adding the method name to the appropriate class property (<a class="reference internal" href="#beforeinsert">$beforeInsert</a>, <a class="reference internal" href="#afterupdate">$afterUpdate</a>,
+etc). Multiple callbacks can be added to a single event and they will be processed one after the other. You can
+use the same callback in multiple events:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyModel</span> <span class="k">extends</span> <span class="nx">Model</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">protected</span> <span class="nv">$beforeInsert</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;hashPassword&#39;</span><span class="p">];</span>
+    <span class="k">protected</span> <span class="nv">$beforeUpdate</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;hashPassword&#39;</span><span class="p">];</span>
+
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Additionally, each model may allow (default) or deny callbacks class-wide by setting its <a class="reference internal" href="#allowcallbacks">$allowCallbacks</a> property:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyModel</span> <span class="k">extends</span> <span class="nx">Model</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">protected</span> <span class="nv">$allowCallbacks</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You may also change this setting temporarily for a single model call using the <code class="docutils literal notranslate"><span class="pre">allowCallbacks()</span></code> method:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="nv">$model</span><span class="o">-&gt;</span><span class="na">allowCallbacks</span><span class="p">(</span><span class="k">false</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// No callbacks triggered</span>
+<span class="nv">$model</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// Callbacks subject to original property value</span>
+</pre></div>
+</div>
+</section>
+<section id="event-parameters">
+<h3><a class="toc-backref" href="#id73" role="doc-backlink">Event Parameters</a><a class="headerlink" href="#event-parameters" title="Permalink to this heading"></a></h3>
+<p>Since the exact data passed to each callback varies a bit, here are the details on what is in the <code class="docutils literal notranslate"><span class="pre">$data</span></code> parameter
+passed to each event:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Event</p></th>
+<th class="head"><p>$data contents</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>beforeInsert</p></td>
+<td><p><strong>data</strong> = the key/value pairs that are being inserted. If an object or Entity class is passed to the
+<code class="docutils literal notranslate"><span class="pre">insert()</span></code> method, it is first converted to an array.</p></td>
+</tr>
+<tr class="row-odd"><td><p>afterInsert</p></td>
+<td><p><strong>id</strong> = the primary key of the new row, or 0 on failure.
+<strong>data</strong> = the key/value pairs being inserted.
+<strong>result</strong> = the results of the <code class="docutils literal notranslate"><span class="pre">insert()</span></code> method used through the Query Builder.</p></td>
+</tr>
+<tr class="row-even"><td><p>beforeUpdate</p></td>
+<td><p><strong>id</strong> = the array of primary keys of the rows being passed to the <code class="docutils literal notranslate"><span class="pre">update()</span></code> method.
+<strong>data</strong> = the key/value pairs that are being updated. If an object or Entity class is passed to the
+<code class="docutils literal notranslate"><span class="pre">update()</span></code> method, it is first converted to an array.</p></td>
+</tr>
+<tr class="row-odd"><td><p>afterUpdate</p></td>
+<td><p><strong>id</strong> = the array of primary keys of the rows being passed to the <code class="docutils literal notranslate"><span class="pre">update()</span></code> method.
+<strong>data</strong> = the key/value pairs being updated.
+<strong>result</strong> = the results of the <code class="docutils literal notranslate"><span class="pre">update()</span></code> method used through the Query Builder.</p></td>
+</tr>
+<tr class="row-even"><td><p>beforeFind</p></td>
+<td><p>The name of the calling <strong>method</strong>, whether a <strong>singleton</strong> was requested, and these additional fields:</p></td>
+</tr>
+<tr class="row-odd"><td><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">first()</span></code></p></li>
+</ul>
+</td>
+<td><p>No additional fields</p></td>
+</tr>
+<tr class="row-even"><td><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">find()</span></code></p></li>
+</ul>
+</td>
+<td><p><strong>id</strong> = the primary key of the row being searched for.</p></td>
+</tr>
+<tr class="row-odd"><td><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">findAll()</span></code></p></li>
+</ul>
+</td>
+<td><p><strong>limit</strong> = the number of rows to find.
+<strong>offset</strong> = the number of rows to skip during the search.</p></td>
+</tr>
+<tr class="row-even"><td><p>afterFind</p></td>
+<td><p>Same as <strong>beforeFind</strong> but including the resulting row(s) of data, or null if no result found.</p></td>
+</tr>
+<tr class="row-odd"><td><p>beforeDelete</p></td>
+<td><p><strong>id</strong> = an array of primary key rows being passed to the <code class="docutils literal notranslate"><span class="pre">delete()</span></code> method.
+<strong>purge</strong> = boolean whether soft-delete rows should be hard deleted.</p></td>
+</tr>
+<tr class="row-even"><td><p>afterDelete</p></td>
+<td><p><strong>id</strong> = an array of primary key rows being passed to the <code class="docutils literal notranslate"><span class="pre">delete()</span></code> method.
+<strong>purge</strong> = boolean whether soft-delete rows should be hard deleted.
+<strong>result</strong> = the result of the <code class="docutils literal notranslate"><span class="pre">delete()</span></code> call on the Query Builder.
+<strong>data</strong> = unused.</p></td>
+</tr>
+<tr class="row-odd"><td><p>beforeInsertBatch</p></td>
+<td><p><strong>data</strong> = associative array of values that are being inserted. If an object or Entity class is passed to the
+<code class="docutils literal notranslate"><span class="pre">insertBatch()</span></code> method, it is first converted to an array.</p></td>
+</tr>
+<tr class="row-even"><td><p>afterInsertBatch</p></td>
+<td><p><strong>data</strong> = the associative array of values being inserted.
+<strong>result</strong> = the results of the <code class="docutils literal notranslate"><span class="pre">insertbatch()</span></code> method used through the Query Builder.</p></td>
+</tr>
+<tr class="row-odd"><td><p>beforeUpdateBatch</p></td>
+<td><p><strong>data</strong> = associative array of values that are being updated. If an object or Entity class is passed to the
+<code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code> method, it is first converted to an array.</p></td>
+</tr>
+<tr class="row-even"><td><p>afterUpdateBatch</p></td>
+<td><p><strong>data</strong> = the key/value pairs being updated.
+<strong>result</strong> = the results of the <code class="docutils literal notranslate"><span class="pre">updateBatch()</span></code> method used through the Query Builder.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When using the <code class="docutils literal notranslate"><span class="pre">paginate()</span></code> method in combination with the <code class="docutils literal notranslate"><span class="pre">beforeFind</span></code> event to modify the query,
+the results may not behave as expected.</p>
+<p>This is because the <code class="docutils literal notranslate"><span class="pre">beforeFind</span></code> event only affects the actual retrieval of the results (<code class="docutils literal notranslate"><span class="pre">findAll()</span></code>),
+but <strong>not</strong> the query used to count the total number of rows for pagination.</p>
+<p>As a result, the total row count used for generating pagination links may not reflect the modified query conditions,
+leading to inconsistencies in pagination.</p>
+</div>
+</section>
+<section id="modifying-find-data">
+<h3><a class="toc-backref" href="#id74" role="doc-backlink">Modifying Find* Data</a><a class="headerlink" href="#modifying-find-data" title="Permalink to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">beforeFind</span></code> and <code class="docutils literal notranslate"><span class="pre">afterFind</span></code> methods can both return a modified set of data to override the normal response
+from the model. For <code class="docutils literal notranslate"><span class="pre">afterFind</span></code> any changes made to <code class="docutils literal notranslate"><span class="pre">data</span></code> in the return array will automatically be passed back
+to the calling context. In order for <code class="docutils literal notranslate"><span class="pre">beforeFind</span></code> to intercept the find workflow it must also return an additional
+boolean, <code class="docutils literal notranslate"><span class="pre">returnData</span></code>:</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Model</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyModel</span> <span class="k">extends</span> <span class="nx">Model</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">protected</span> <span class="nv">$beforeFind</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;checkCache&#39;</span><span class="p">];</span>
+
+    <span class="c1">// ...</span>
+
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">checkCache</span><span class="p">(</span><span class="k">array</span> <span class="nv">$data</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// Check if the requested item is already in our cache</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nv">$item</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getCachedItem</span><span class="p">(</span><span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]))</span> <span class="p">{</span>
+            <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span>       <span class="o">=</span> <span class="nv">$item</span><span class="p">;</span>
+            <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;returnData&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+
+            <span class="k">return</span> <span class="nv">$data</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="manual-model-creation">
+<h2><a class="toc-backref" href="#id75" role="doc-backlink">Manual Model Creation</a><a class="headerlink" href="#manual-model-creation" title="Permalink to this heading"></a></h2>
+<p>You do not need to extend any special class to create a model for your application. All you need is to get an
+instance of the database connection and you’re good to go. This allows you to bypass the features CodeIgniter’s
+Model gives you out of the box, and create a fully custom experience.</p>
+<div class="highlight-html+php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">App\Models</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">CodeIgniter\Database\ConnectionInterface</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UserModel</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$db</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">(</span><span class="nx">ConnectionInterface</span> <span class="nv">$db</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span> <span class="o">=</span> <span class="nv">$db</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Modeling Data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="entities.html" class="btn btn-neutral float-right" title="Using Entity Classes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2026 CodeIgniter Foundation.
+      <span class="lastupdated">Last updated on Feb 01, 2026.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script> 
+
+</body>
+</html>
