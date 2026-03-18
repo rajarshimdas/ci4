@@ -52,14 +52,14 @@ html {
 ----------------------------------------------------- */
 @font-face {
     font-family: "ci4fontR";
-    src: url("/fonts/IBMPlexSans-Regular.woff2") format("woff2");
+    src: url("fonts/IBMPlexSans-Regular.woff2") format("woff2");
     font-weight: 400;
     font-display: optional;
 }
 
 @font-face {
     font-family: "ci4fontB";
-    src: url("/fonts/IBMPlexSans-Bold.woff2") format("woff2");
+    src: url("fonts/IBMPlexSans-Bold.woff2") format("woff2");
     font-weight: 700;
     font-display: optional;
 }
@@ -72,11 +72,12 @@ html {
     font-family: "ci4fontFallback";
     src: local("Segoe UI");
 
-    /* These values reduce layout shift */
+    /* These values reduce layout shift 
     ascent-override: 90%;
     descent-override: 22%;
     line-gap-override: 0%;
     size-adjust: 102%;
+    */
 }
 
 
@@ -125,7 +126,7 @@ svg {
 label {
     display: block;
     width: 100%;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-family: var(--rd-font-family-sans);
 }
 
