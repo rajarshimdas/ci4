@@ -6,20 +6,39 @@
 | Updated:                                              |
 +-------------------------------------------------------+
 */
-@import url("extras/normailize.css");
+@import url("extras/normalize.css");
+
+/* Root Element */
+html {
+    font-size: 24px;
+}
+
+:root,
+:host {
+    --rd-bg-dialog: yellow;
+    --rd-max-width: 1500px;
+    --rd-font-family-sans: "Segoe UI", ci4fontR, Roboto, Oxygen, Ubuntu, Cantarell, Helvetica, Arial;
+    --rd-font-family-monospace: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+}
+
 
 @font-face {
     font-family: "ci4fontR";
     src: url("fonts/IBMPlexSans-Regular.woff2") format("woff2");
+    font-weight: 400;
 }
 
 @font-face {
     font-family: "ci4fontB";
     src: url("fonts/IBMPlexSans-Bold.woff2") format("woff2");
+    font-weight: 700;
 }
 
+
 body {
-    font-family: -apple-system, "Segoe UI", "ci4fontR", Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    font-family: var(--rd-font-family-sans);
     margin: 0;
 }
 
@@ -27,15 +46,38 @@ body {
 *,
 *::before,
 *::after {
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 
 /* do not need to define everytime */
-table,
+/* table - do not change. fullcalendar breaks */
 img,
 video,
 canvas,
 svg {
     display: block;
     max-width: 100%;
+}
+
+.container {
+    width: 100%;
+    max-width: var(--rd-max-width);
+    margin: 10px auto;
+    background-color: var(--rd-bg-dialog);
+}
+
+label {
+    display: block;
+    width: 100%;
+    font-size: 0.9rem;
+    font-family: var(--rd-font-family-sans);
+}
+
+input,
+select,
+button {
+    font-size: 1rem;
+    width: 100%;
+    font-family: var(--rd-font-family-sans);
+    margin: 5px 0px;
 }
