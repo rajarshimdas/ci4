@@ -1,25 +1,27 @@
 @import url("extras/normalize.css");
 
+/* =========================
+   Fonts
+========================= */
 @font-face {
-    font-family: "ci4fontR";
-    src: url("fonts/IBMPlexSans-Regular.woff2") format("woff2");
-    font-weight: 400;
-    font-display: optional;
+  font-family: "ci4fontR";
+  src: url("fonts/IBMPlexSans-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: optional;
 }
 
 @font-face {
-    font-family: "ci4fontB";
-    src: url("fonts/IBMPlexSans-Bold.woff2") format("woff2");
-    font-weight: 700;
-    font-display: optional;
+  font-family: "ci4fontB";
+  src: url("fonts/IBMPlexSans-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: optional;
 }
 
 /* =========================
-   GitHub Design Tokens
+   Design Tokens
 ========================= */
-
 :root {
-  /* Colors (GitHub Dark) */
+  /* Colors */
   --color-canvas-default: #0d1117;
   --color-canvas-subtle: #161b22;
 
@@ -34,40 +36,49 @@
   --color-success-fg: #3fb950;
   --color-danger-fg: #f85149;
 
+  --color-white: #ffffff;
+  --color-hover: #30363d;
+  --color-text-strong: #f0f6fc;
+
   /* Typography */
   --fontStack-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", ci4fontR, Helvetica, Arial, sans-serif;
-  --font-size-small: 12px;
-  --font-size-base: 14px;
-  --font-size-medium: 16px;
 
-  /* Spacing (4px scale) */
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-md: 16px;
+
+  /* Spacing */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
   --space-5: 20px;
-  --space-6: 24px;
 
   /* Radius */
   --radius: 6px;
 }
 
+/* =========================
+   Base
+========================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
+  margin: 0;
   background: var(--color-canvas-default);
   color: var(--color-fg-default);
   font-family: var(--fontStack-sans);
   font-size: var(--font-size-base);
   line-height: 1.5;
-  margin: 0;
 }
 
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
-/* Headings (GitHub style) */
+/* =========================
+   Typography
+========================= */
 h1, h2, h3 {
   font-weight: 600;
   margin-bottom: var(--space-3);
@@ -77,12 +88,11 @@ h1 { font-size: 24px; }
 h2 { font-size: 20px; }
 h3 { font-size: 16px; }
 
-small {
-  color: var(--color-fg-muted);
-}
+small { color: var(--color-fg-muted); }
 
-
-/* Tabs */
+/* =========================
+   Tabs
+========================= */
 .gh-tabs {
   border-bottom: 1px solid var(--color-border-default);
 }
@@ -97,70 +107,67 @@ small {
   appearance: none;
   background: none;
   border: none;
-
-  color: var(--color-fg-default);
-  font-size: var(--font-size-base);
+  cursor: pointer;
 
   display: inline-flex;
   align-items: center;
   gap: 6px;
 
-  padding: var(--space-2) var(--space-2);
-  cursor: pointer;
+  padding: var(--space-2);
+  font-size: var(--font-size-base);
+  color: var(--color-fg-default);
 
   border-bottom: 2px solid transparent;
-
   position: relative;
   top: 1px;
 }
 
 .gh-tab-list button:hover {
-  color: #f0f6fc;
+  color: var(--color-text-strong);
   border-bottom-color: var(--color-border-muted);
 }
 
 .gh-tab-list button.active {
-  color: #f0f6fc;
+  color: var(--color-text-strong);
   border-bottom-color: var(--color-accent-fg);
   font-weight: 600;
 }
 
-/* Buttons */
+/* =========================
+   Buttons
+========================= */
 .gh-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
 
+  padding: 5px 12px;
   font-size: var(--font-size-base);
   font-weight: 500;
-
-  padding: 5px 12px;
 
   background: var(--color-canvas-subtle);
   border: 1px solid var(--color-border-muted);
   border-radius: var(--radius);
-
   color: var(--color-fg-default);
+
   cursor: pointer;
 }
 
 .gh-btn:hover {
-  background: #30363d;
-  border-color: #8b949e;
+  background: var(--color-hover);
+  border-color: var(--color-fg-muted);
 }
 
-/* Primary */
 .gh-btn-primary {
   background: #238636;
   border-color: rgba(240,246,252,0.1);
-  color: #fff;
+  color: var(--color-white);
 }
 
 .gh-btn-primary:hover {
   background: #2ea043;
 }
 
-/* Danger */
 .gh-btn-danger {
   color: var(--color-danger-fg);
 }
@@ -169,18 +176,20 @@ small {
   background: rgba(248,81,73,0.1);
 }
 
-/* Inputs */
+/* =========================
+   Inputs
+========================= */
 .gh-input {
   width: 100%;
-  font-size: var(--font-size-base);
-
   padding: 5px 12px;
+
+  font-size: var(--font-size-base);
+  color: var(--color-fg-default);
 
   background: var(--color-canvas-default);
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius);
 
-  color: var(--color-fg-default);
   outline: none;
 }
 
@@ -189,24 +198,23 @@ small {
   box-shadow: 0 0 0 2px rgba(88,166,255,0.3);
 }
 
-/* Dropdown */
-.gh-dropdown {
-  position: relative;
-}
+/* =========================
+   Dropdown
+========================= */
+.gh-dropdown { position: relative; }
 
 .gh-dropdown-menu {
   position: absolute;
   top: 100%;
   right: 0;
 
+  display: none;
+  min-width: 200px;
+  padding: var(--space-1) 0;
+
   background: var(--color-canvas-subtle);
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius);
-
-  min-width: 200px;
-  padding: 4px 0;
-
-  display: none;
 }
 
 .gh-dropdown.open .gh-dropdown-menu {
@@ -220,10 +228,12 @@ small {
 }
 
 .gh-dropdown-item:hover {
-  background: #30363d;
+  background: var(--color-hover);
 }
 
-/* Card/Box */
+/* =========================
+   Card
+========================= */
 .gh-card {
   background: var(--color-canvas-subtle);
   border: 1px solid var(--color-border-default);
@@ -231,15 +241,20 @@ small {
   padding: var(--space-4);
 }
 
-/* Badges */
+/* =========================
+   Badge
+========================= */
 .gh-badge {
+  padding: 0 6px;
+  font-size: var(--font-size-sm);
+
   background: var(--color-border-muted);
   border-radius: 999px;
-  padding: 0 6px;
-  font-size: 12px;
 }
 
-/* Layout Utilities */
+/* =========================
+   Utilities
+========================= */
 .gh-flex {
   display: flex;
   align-items: center;
@@ -248,73 +263,68 @@ small {
 
 .gh-between {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 }
 
-.gh-muted {
-  color: var(--color-fg-muted);
-}
+.gh-muted { color: var(--color-fg-muted); }
 
+.gh-full { width: 100%; }
+
+.gh-mt-3 { margin-top: var(--space-3); }
 .gh-mt-4 { margin-top: var(--space-4); }
+
 .gh-p-4 { padding: var(--space-4); }
 
-/* Login */
 /* =========================
-   Login Layout
+   Login
 ========================= */
-
 .gh-login-page {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-
-  background: #0d1117;
-  color: #c9d1d9;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  gap: var(--space-4);
 }
 
-/* Logo */
-.gh-login-logo {
-  margin-bottom: 8px;
-}
-
-.gh-logo {
-  font-size: 40px;
-}
-
-/* Card */
-.gh-login-card {
+.gh-login-card,
+.gh-login-footer {
   width: 308px;
-  background: #161b22;
-  border: 1px solid #21262d;
-  border-radius: 6px;
-  padding: 20px;
+  background: var(--color-canvas-subtle);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius);
+}
+
+.gh-login-card {
+  padding: var(--space-5);
 }
 
 .gh-login-card h1 {
+  text-align: center;
+  margin-bottom: var(--space-4);
   font-size: 20px;
   font-weight: 400;
-  margin-bottom: 16px;
+  color: var(--color-text-strong);
+}
+
+.gh-login-footer {
+  padding: var(--space-4);
   text-align: center;
-  color: #f0f6fc;
+  font-size: var(--font-size-base);
 }
 
 /* Form */
 .gh-form label {
   display: block;
-  font-size: 14px;
-  margin-bottom: 6px;
+  margin-bottom: var(--space-1);
 }
 
 .gh-form input {
-  margin-bottom: 16px;
+  margin-bottom: var(--space-4);
 }
 
-/* Password wrapper */
+/* Password */
 .gh-password-wrap {
   position: relative;
 }
@@ -325,49 +335,22 @@ small {
 
 .gh-eye {
   position: absolute;
-  right: 8px;
   top: 6px;
+  right: 8px;
+
   background: none;
   border: none;
   cursor: pointer;
-  color: #8b949e;
+  color: var(--color-fg-muted);
 }
 
-/* Button */
-.gh-full {
-  width: 100%;
-}
-
-/* Link */
+/* Links */
 .gh-link {
-  color: #58a6ff;
+  font-size: var(--font-size-sm);
+  color: var(--color-fg-accent);
   text-decoration: none;
-  font-size: 12px;
 }
 
 .gh-link:hover {
   text-decoration: underline;
-}
-
-/* Footer */
-.gh-login-footer {
-  border: 1px solid #21262d;
-  padding: 16px;
-  border-radius: 6px;
-  width: 308px;
-  text-align: center;
-  font-size: 14px;
-}
-
-/* Utilities */
-.gh-mt-3 { margin-top: 12px; }
-.gh-mt-4 { margin-top: 16px; }
-
-.gh-flex {
-  display: flex;
-  align-items: center;
-}
-
-.gh-between {
-  justify-content: space-between;
 }
