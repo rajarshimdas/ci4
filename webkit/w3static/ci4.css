@@ -1,55 +1,5 @@
-/*
-+-------------------------------------------------------+
-| Rajarshi Das                                          |
-| PRO FONT FIX CSS (No Jump / No Flicker)              |
-+-------------------------------------------------------+
-*/
-
 @import url("extras/normalize.css");
 
-/* -----------------------------------------------------
-   FONT PRELOAD (add this in HTML <head>, not CSS)
---------------------------------------------------------
-<link rel="preload" href="/fonts/IBMPlexSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/IBMPlexSans-Bold.woff2" as="font" type="font/woff2" crossorigin>
------------------------------------------------------ */
-
-
-/* -----------------------------------------------------
-   ROOT
------------------------------------------------------ */
-html {
-    font-size: 20px;
-}
-
-:root,
-:host {
-    --rd-bg-dialog: whitesmoke;
-    --rd-max-width: 1500px;
-
-    /* Final font stack with fallback metrics */
-    --rd-font-family-sans:
-        ci4fontR,
-        ci4fontFallback,
-        "Segoe UI",
-        Roboto,
-        Arial,
-        sans-serif;
-
-    --rd-font-family-monospace:
-        ui-monospace,
-        SFMono-Regular,
-        "SF Mono",
-        Menlo,
-        Consolas,
-        "Liberation Mono",
-        monospace;
-}
-
-
-/* -----------------------------------------------------
-   PRIMARY FONT (IBM Plex)
------------------------------------------------------ */
 @font-face {
     font-family: "ci4fontR";
     src: url("fonts/IBMPlexSans-Regular.woff2") format("woff2");
@@ -64,118 +14,360 @@ html {
     font-display: optional;
 }
 
+/* =========================
+   GitHub Design Tokens
+========================= */
 
-/* -----------------------------------------------------
-   METRIC-COMPATIBLE FALLBACK (PRO FIX)
------------------------------------------------------ */
-@font-face {
-    font-family: "ci4fontFallback";
-    src: local("Segoe UI");
+:root {
+  /* Colors (GitHub Dark) */
+  --color-canvas-default: #0d1117;
+  --color-canvas-subtle: #161b22;
 
-    /* These values reduce layout shift 
-    ascent-override: 90%;
-    descent-override: 22%;
-    line-gap-override: 0%;
-    size-adjust: 102%;
-    */
+  --color-border-default: #21262d;
+  --color-border-muted: #30363d;
+
+  --color-fg-default: #c9d1d9;
+  --color-fg-muted: #8b949e;
+  --color-fg-accent: #58a6ff;
+
+  --color-accent-fg: #f78166;
+  --color-success-fg: #3fb950;
+  --color-danger-fg: #f85149;
+
+  /* Typography */
+  --fontStack-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", ci4fontR, Helvetica, Arial, sans-serif;
+  --font-size-small: 12px;
+  --font-size-base: 14px;
+  --font-size-medium: 16px;
+
+  /* Spacing (4px scale) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+
+  /* Radius */
+  --radius: 6px;
 }
 
-
-/* -----------------------------------------------------
-   BASE
------------------------------------------------------ */
 body {
-    font-size: 1.2rem;
-    font-family: var(--rd-font-family-sans);
-    margin: 0;
+  background: var(--color-canvas-default);
+  color: var(--color-fg-default);
+  font-family: var(--fontStack-sans);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  margin: 0;
 }
 
-
-/* -----------------------------------------------------
-   RESET
------------------------------------------------------ */
 *,
 *::before,
 *::after {
     box-sizing: border-box;
 }
 
-img,
-video,
-canvas,
-svg {
-    display: block;
-    max-width: 100%;
+/* Headings (GitHub style) */
+h1, h2, h3 {
+  font-weight: 600;
+  margin-bottom: var(--space-3);
+}
+
+h1 { font-size: 24px; }
+h2 { font-size: 20px; }
+h3 { font-size: 16px; }
+
+small {
+  color: var(--color-fg-muted);
 }
 
 
-/* -----------------------------------------------------
-   LAYOUT
------------------------------------------------------ */
-.container {
-    width: 100%;
-    max-width: var(--rd-max-width);
-    margin: 10px auto;
-    background-color: var(--rd-bg-dialog);
+/* Tabs */
+.gh-tabs {
+  border-bottom: 1px solid var(--color-border-default);
 }
 
-
-/* -----------------------------------------------------
-   FORM ELEMENTS (NO JUMP GUARANTEE)
------------------------------------------------------ */
-label {
-    display: block;
-    width: 100%;
-    font-size: 0.8rem;
-    font-family: var(--rd-font-family-sans);
+.gh-tab-list {
+  display: flex;
+  gap: var(--space-4);
+  padding: 0 var(--space-4);
 }
 
-input,
-select,
-button {
-    font-family: var(--rd-font-family-sans);
-    font-size: 1rem;
-    width: 100%;
+.gh-tab-list button {
+  appearance: none;
+  background: none;
+  border: none;
 
-    height: 2.2rem;
-    padding: 0 0.5rem;
-    margin: 0.5rem 0;
+  color: var(--color-fg-default);
+  font-size: var(--font-size-base);
 
-    line-height: 1.2; /* consistent, avoid "normal" */
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 
-    border: 1px solid #999;
-    box-sizing: border-box;
-    border-radius: 4px;
+  padding: var(--space-2) var(--space-2);
+  cursor: pointer;
+
+  border-bottom: 2px solid transparent;
+
+  position: relative;
+  top: 1px;
 }
 
-/* ❌ REMOVE flex from inputs/selects */
-input,
-select {
-    display: block;
-    -webkit-appearance: none;
+.gh-tab-list button:hover {
+  color: #f0f6fc;
+  border-bottom-color: var(--color-border-muted);
 }
 
-/* ✅ ONLY button uses flex */
-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    line-height: 1; /* prevents vertical shift */
-    cursor: pointer;
-}
-/* -----------------------------------------------------
-   FOCUS STATE (NO LAYOUT SHIFT)
------------------------------------------------------ */
-input:focus,
-select:focus,
-button:focus {
-    outline: none;
-    border: 1px solid #999;
+.gh-tab-list button.active {
+  color: #f0f6fc;
+  border-bottom-color: var(--color-accent-fg);
+  font-weight: 600;
 }
 
-button:hover{
-    border: 1px solid #525252;
-    background-color: #525252;
-    color: white;
+/* Buttons */
+.gh-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: var(--font-size-base);
+  font-weight: 500;
+
+  padding: 5px 12px;
+
+  background: var(--color-canvas-subtle);
+  border: 1px solid var(--color-border-muted);
+  border-radius: var(--radius);
+
+  color: var(--color-fg-default);
+  cursor: pointer;
+}
+
+.gh-btn:hover {
+  background: #30363d;
+  border-color: #8b949e;
+}
+
+/* Primary */
+.gh-btn-primary {
+  background: #238636;
+  border-color: rgba(240,246,252,0.1);
+  color: #fff;
+}
+
+.gh-btn-primary:hover {
+  background: #2ea043;
+}
+
+/* Danger */
+.gh-btn-danger {
+  color: var(--color-danger-fg);
+}
+
+.gh-btn-danger:hover {
+  background: rgba(248,81,73,0.1);
+}
+
+/* Inputs */
+.gh-input {
+  width: 100%;
+  font-size: var(--font-size-base);
+
+  padding: 5px 12px;
+
+  background: var(--color-canvas-default);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius);
+
+  color: var(--color-fg-default);
+  outline: none;
+}
+
+.gh-input:focus {
+  border-color: var(--color-fg-accent);
+  box-shadow: 0 0 0 2px rgba(88,166,255,0.3);
+}
+
+/* Dropdown */
+.gh-dropdown {
+  position: relative;
+}
+
+.gh-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+
+  background: var(--color-canvas-subtle);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius);
+
+  min-width: 200px;
+  padding: 4px 0;
+
+  display: none;
+}
+
+.gh-dropdown.open .gh-dropdown-menu {
+  display: block;
+}
+
+.gh-dropdown-item {
+  padding: 6px 12px;
+  font-size: var(--font-size-base);
+  cursor: pointer;
+}
+
+.gh-dropdown-item:hover {
+  background: #30363d;
+}
+
+/* Card/Box */
+.gh-card {
+  background: var(--color-canvas-subtle);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+}
+
+/* Badges */
+.gh-badge {
+  background: var(--color-border-muted);
+  border-radius: 999px;
+  padding: 0 6px;
+  font-size: 12px;
+}
+
+/* Layout Utilities */
+.gh-flex {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.gh-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gh-muted {
+  color: var(--color-fg-muted);
+}
+
+.gh-mt-4 { margin-top: var(--space-4); }
+.gh-p-4 { padding: var(--space-4); }
+
+/* Login */
+/* =========================
+   Login Layout
+========================= */
+
+.gh-login-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+
+  background: #0d1117;
+  color: #c9d1d9;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+/* Logo */
+.gh-login-logo {
+  margin-bottom: 8px;
+}
+
+.gh-logo {
+  font-size: 40px;
+}
+
+/* Card */
+.gh-login-card {
+  width: 308px;
+  background: #161b22;
+  border: 1px solid #21262d;
+  border-radius: 6px;
+  padding: 20px;
+}
+
+.gh-login-card h1 {
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 16px;
+  text-align: center;
+  color: #f0f6fc;
+}
+
+/* Form */
+.gh-form label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.gh-form input {
+  margin-bottom: 16px;
+}
+
+/* Password wrapper */
+.gh-password-wrap {
+  position: relative;
+}
+
+.gh-password-wrap input {
+  padding-right: 32px;
+}
+
+.gh-eye {
+  position: absolute;
+  right: 8px;
+  top: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #8b949e;
+}
+
+/* Button */
+.gh-full {
+  width: 100%;
+}
+
+/* Link */
+.gh-link {
+  color: #58a6ff;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.gh-link:hover {
+  text-decoration: underline;
+}
+
+/* Footer */
+.gh-login-footer {
+  border: 1px solid #21262d;
+  padding: 16px;
+  border-radius: 6px;
+  width: 308px;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* Utilities */
+.gh-mt-3 { margin-top: 12px; }
+.gh-mt-4 { margin-top: 16px; }
+
+.gh-flex {
+  display: flex;
+  align-items: center;
+}
+
+.gh-between {
+  justify-content: space-between;
 }
