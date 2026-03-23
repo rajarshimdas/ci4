@@ -70,7 +70,7 @@
 body {
   margin: 0;
   /* background: var(--color-canvas-default); */
-  background-color: #c9d1d9;
+  background-color: whitesmoke;
   color: var(--color-fg-default);
   font-family: var(--fontStack-sans);
   font-size: var(--font-size-base);
