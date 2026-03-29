@@ -6,3 +6,11 @@
 | Updated:                                              |
 +-------------------------------------------------------+
 */
+
+function e$(elementId) {
+    return document.getElementById(elementId);
+}
+
+function rx(message){
+    console.log(message)
+}
